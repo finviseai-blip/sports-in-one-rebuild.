@@ -64,9 +64,8 @@ export default function TurfAuth() {
     else { setErrors(p=>({...p,otp:'Enter 6-digit OTP'})) }
   }
   const setCourt = (i,k,v) => set('courts', f.courts.map((c,idx) => idx===i?{...c,[k]:v}:c))
+  const addCourt = () => set('courts', [...f.courts, { name: `Ground ${f.courts.length + 1}`, sport: f.sports[0] || 'football', surface: 'Artificial Turf', size: '7-a-side', price: '800', lights: true, roofed: false, description: '' }])
   const delCourt = (i) => set('courts', f.courts.filter((_,idx)=>idx!==i))
-
-  const fileOk = (f2) => f2 ? `✓ ${f2.name.slice(0,16)}…` : null
 
   const validate = () => {
     const e = {}
