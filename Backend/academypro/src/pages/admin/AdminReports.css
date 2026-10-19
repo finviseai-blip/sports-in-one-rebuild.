@@ -1,0 +1,370 @@
+.adm-rpt-page {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  background: #0a0a0a;
+}
+
+.adm-rpt-scroll {
+  flex: 1;
+  padding: 12px 16px 0;
+  overflow-y: auto;
+}
+
+.adm-rpt-title {
+  font-size: 24px;
+  font-weight: 800;
+  color: #fff;
+  margin: 0 0 2px;
+}
+
+.adm-rpt-sub {
+  font-size: 12px;
+  color: #555;
+  margin: 0 0 14px;
+}
+
+/* KPI Grid */
+.adm-rpt-kpi-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin-bottom: 14px;
+}
+
+.adm-rpt-kpi {
+  background: #1a1a1a;
+  border: 1px solid #2a2a2a;
+  border-radius: 14px;
+  padding: 14px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.adm-rpt-kpi-green {
+  border-color: rgba(76,175,80,0.3);
+}
+
+.adm-rpt-kpi-label {
+  font-size: 10px;
+  color: #555;
+  letter-spacing: 0.5px;
+}
+
+.adm-rpt-kpi-value {
+  font-size: 20px;
+  font-weight: 800;
+  color: #fff;
+}
+
+.adm-rpt-kpi-green .adm-rpt-kpi-value {
+  color: #4caf50;
+}
+
+/* Chart card */
+.adm-rpt-chart-card {
+  background: #1a1a1a;
+  border: 1px solid #2a2a2a;
+  border-radius: 16px;
+  padding: 16px;
+  margin-bottom: 12px;
+}
+
+.adm-rpt-chart-label {
+  font-size: 10px;
+  color: #555;
+  letter-spacing: 1.5px;
+  font-weight: 600;
+  margin-bottom: 12px;
+}
+
+/* This Month */
+.adm-rpt-month-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 12px;
+}
+
+.adm-rpt-month-amount {
+  font-size: 28px;
+  font-weight: 800;
+  color: #fff;
+  margin-top: 4px;
+}
+
+.adm-rpt-month-growth {
+  font-size: 12px;
+  color: #4caf50;
+  font-weight: 600;
+  background: rgba(76,175,80,0.1);
+  padding: 6px 12px;
+  border-radius: 10px;
+}
+
+.adm-rpt-breakdown-btn {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  background: #111;
+  border: 1px solid #2a2a2a;
+  border-radius: 12px;
+  padding: 12px 14px;
+  color: #f5a623;
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+  width: 100%;
+  text-align: left;
+  transition: border-color 0.2s;
+  gap: 3px;
+}
+
+.adm-rpt-breakdown-btn span {
+  font-size: 11px;
+  color: #555;
+  font-weight: 400;
+}
+
+.adm-rpt-breakdown-btn:hover { border-color: #f5a623; }
+
+.adm-rpt-breakdown-section {
+  margin-top: 12px;
+  border-top: 1px solid #2a2a2a;
+  padding-top: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.adm-rpt-breakdown-title {
+  font-size: 10px;
+  color: #f5a623;
+  letter-spacing: 2px;
+  font-weight: 700;
+  margin-bottom: 10px;
+}
+
+.adm-rpt-breakdown-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 0;
+  border-bottom: 1px solid #1e1e1e;
+}
+
+.adm-rpt-breakdown-row:last-child { border-bottom: none; }
+
+.adm-rpt-bk-name {
+  font-size: 13px;
+  color: #ccc;
+  font-weight: 600;
+}
+
+.adm-rpt-bk-sub {
+  font-size: 11px;
+  color: #555;
+  margin-top: 2px;
+}
+
+.adm-rpt-bk-amount {
+  font-size: 14px;
+  font-weight: 800;
+  color: #f5a623;
+}
+
+/* Expenses */
+.adm-rpt-expenses-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+.adm-rpt-add-exp-btn {
+  background: rgba(245,166,35,0.12);
+  border: 1px solid rgba(245,166,35,0.3);
+  color: #f5a623;
+  font-size: 12px;
+  font-weight: 600;
+  padding: 6px 12px;
+  border-radius: 9px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.adm-rpt-add-exp-btn:hover { background: rgba(245,166,35,0.2); }
+
+.adm-rpt-add-exp-form {
+  background: #111;
+  border-radius: 12px;
+  padding: 12px;
+  margin-bottom: 10px;
+  border: 1px solid #2a2a2a;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+/* Shared form fields */
+.adm-form-field {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.adm-form-field label {
+  font-size: 10px;
+  color: #555;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  font-weight: 600;
+}
+
+.adm-form-field input {
+  background: #0a0a0a;
+  border: 1px solid #2a2a2a;
+  border-radius: 10px;
+  padding: 10px 12px;
+  color: #fff;
+  font-size: 13px;
+  outline: none;
+  transition: border-color 0.2s;
+  font-family: inherit;
+  width: 100%;
+}
+
+.adm-form-field input:focus { border-color: #f5a623; }
+
+.adm-form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+.adm-form-actions {
+  display: flex;
+  gap: 10px;
+}
+
+.adm-form-save {
+  flex: 1;
+  background: #f5a623;
+  color: #000;
+  border: none;
+  border-radius: 10px;
+  padding: 12px;
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.adm-form-cancel {
+  flex: 1;
+  background: #111;
+  color: #aaa;
+  border: 1px solid #2a2a2a;
+  border-radius: 10px;
+  padding: 12px;
+  font-size: 13px;
+  cursor: pointer;
+}
+
+.adm-rpt-exp-row {
+  display: flex;
+  align-items: center;
+  padding: 10px 0;
+  border-bottom: 1px solid #1e1e1e;
+  gap: 8px;
+}
+
+.adm-rpt-exp-name {
+  flex: 1;
+  font-size: 13px;
+  color: #ccc;
+}
+
+.adm-rpt-exp-date {
+  font-size: 11px;
+  color: #444;
+}
+
+.adm-rpt-exp-amount {
+  font-size: 14px;
+  font-weight: 700;
+  color: #fff;
+}
+
+.adm-rpt-exp-total {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 0 0;
+  font-size: 14px;
+  font-weight: 700;
+  color: #fff;
+}
+
+/* Rankings */
+.adm-rpt-rankings-note {
+  font-size: 11px;
+  color: #444;
+  margin-bottom: 10px;
+}
+
+.adm-rpt-rank-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 0;
+  border-bottom: 1px solid #1e1e1e;
+}
+
+.adm-rpt-rank-row:last-child { border-bottom: none; }
+
+.adm-rpt-rank-num {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: #2a2a2a;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 13px;
+  font-weight: 800;
+  flex-shrink: 0;
+}
+
+.adm-rpt-rank-info {
+  flex: 1;
+}
+
+.adm-rpt-rank-name {
+  font-size: 13px;
+  font-weight: 700;
+  color: #fff;
+}
+
+.adm-rpt-rank-sport {
+  font-size: 11px;
+  color: #555;
+}
+
+.adm-rpt-rank-right {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 2px;
+}
+
+.adm-rpt-rank-goals {
+  font-size: 12px;
+  color: #f5a623;
+  font-weight: 600;
+}
+
+.adm-rpt-rank-att {
+  font-size: 11px;
+  color: #555;
+}

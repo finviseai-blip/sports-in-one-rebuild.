@@ -1,0 +1,66 @@
+.ts-page   { display:flex; flex-direction:column; min-height:100vh; background:#0a0a0a; }
+.ts-scroll { flex:1; overflow-y:auto; }
+.ts-toast  { position:fixed; top:58px; left:50%; transform:translateX(-50%); background:#1e3d1e; color:#4caf50; border:1px solid #2e6b2e; padding:9px 18px; border-radius:20px; font-size:12px; font-weight:700; z-index:999; white-space:nowrap; }
+
+/* Court strip */
+.ts-court-strip { display:flex; gap:8px; overflow-x:auto; padding:12px 16px 8px; }
+.ts-court-strip::-webkit-scrollbar { height:0; }
+.ts-court-chip { background:#111; border:1.5px solid #1c1c1c; border-radius:14px; padding:10px 14px; display:flex; flex-direction:column; align-items:center; gap:3px; cursor:pointer; font-family:inherit; min-width:70px; position:relative; transition:all .2s; }
+.ts-cc-sport { font-size:20px; }
+.ts-cc-name  { font-size:9px; color:#555; font-weight:700; text-transform:uppercase; letter-spacing:.3px; }
+.ts-court-chip.on .ts-cc-name { color:inherit; }
+.ts-cc-badge { position:absolute; top:-5px; right:-5px; width:17px; height:17px; border-radius:50%; color:#000; font-size:9px; font-weight:800; display:flex; align-items:center; justify-content:center; }
+
+/* Week strip */
+.ts-week-strip { display:flex; gap:6px; overflow-x:auto; padding:0 16px 10px; }
+.ts-week-strip::-webkit-scrollbar { height:0; }
+.ts-day-pill { background:#111; border:1px solid #1c1c1c; border-radius:13px; padding:9px 12px; display:flex; flex-direction:column; align-items:center; gap:1px; cursor:pointer; min-width:44px; font-family:inherit; transition:all .2s; }
+.ts-day-pill.on { background:#f5a623; border-color:#f5a623; }
+.ts-dp-day  { font-size:9px; font-weight:700; color:#555; text-transform:uppercase; }
+.ts-dp-date { font-size:16px; font-weight:800; color:#fff; }
+.ts-dp-free { font-size:9px; font-weight:700; margin-top:1px; }
+.ts-day-pill.on .ts-dp-day, .ts-day-pill.on .ts-dp-date { color:#000; }
+
+/* Summary */
+.ts-summary-strip { display:flex; gap:6px; overflow-x:auto; padding:0 16px 10px; }
+.ts-summary-strip::-webkit-scrollbar { height:0; }
+.ts-sum-item { font-size:11px; font-weight:600; padding:6px 12px; border-radius:10px; white-space:nowrap; }
+.ts-sum-item.booked  { background:rgba(245,166,35,.1); color:#f5a623; }
+.ts-sum-item.free    { background:rgba(76,175,80,.1); color:#4caf50; }
+.ts-sum-item.blocked { background:rgba(100,100,100,.08); color:#555; }
+
+/* Actions */
+.ts-action-row { display:flex; gap:8px; padding:0 16px 12px; }
+.ts-act-btn    { border:none; border-radius:10px; padding:10px 14px; font-size:11px; font-weight:700; cursor:pointer; font-family:inherit; transition:opacity .2s; }
+.ts-act-btn.add     { background:#f5a623; color:#000; }
+.ts-act-btn.block   { background:rgba(229,57,53,.1); color:#e53935; border:1px solid rgba(229,57,53,.2); flex:1; }
+.ts-act-btn.unblock { background:rgba(76,175,80,.08); color:#4caf50; border:1px solid rgba(76,175,80,.18); flex:1; }
+
+/* Add panel */
+.ts-add-panel { background:#111; border:1px solid rgba(245,166,35,.3); border-radius:14px; padding:14px; margin:0 16px 12px; display:flex; flex-direction:column; gap:10px; }
+.ts-add-hd    { font-size:12px; font-weight:700; color:#f5a623; }
+.ts-add-row   { display:grid; grid-template-columns:1fr 1fr; gap:10px; }
+.ts-add-f     { display:flex; flex-direction:column; gap:5px; }
+.ts-add-f label { font-size:10px; color:#555; font-weight:600; text-transform:uppercase; letter-spacing:.5px; }
+.ts-add-f input { background:#0a0a0a; border:1px solid #222; border-radius:10px; padding:10px 12px; color:#fff; font-size:13px; outline:none; font-family:inherit; }
+.ts-add-f input:focus { border-color:#f5a623; }
+.ts-add-btns  { display:flex; gap:10px; }
+.ts-add-save  { flex:1; background:#f5a623; color:#000; border:none; border-radius:10px; padding:11px; font-size:13px; font-weight:700; cursor:pointer; font-family:inherit; }
+.ts-add-cancel{ flex:1; background:#0a0a0a; border:1px solid #222; color:#888; border-radius:10px; padding:11px; font-size:13px; cursor:pointer; font-family:inherit; }
+
+/* Section label */
+.ts-section-lbl { font-size:9px; color:#444; letter-spacing:1.2px; font-weight:700; text-transform:uppercase; padding:4px 16px 8px; }
+
+/* ── SLOT GRID — KheloMore booking style ── */
+.ts-slot-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:8px; padding:0 16px 14px; }
+
+.ts-slot-cell { border-radius:12px; padding:11px 10px; display:flex; flex-direction:column; align-items:center; gap:3px; cursor:pointer; transition:all .15s; border:1.5px solid transparent; font-family:inherit; }
+.ts-slot-cell.available { background:#111; border-color:#222; }
+.ts-slot-cell.available:hover { border-color:#f5a623; background:rgba(245,166,35,.05); }
+.ts-slot-cell.booked    { cursor:not-allowed; }
+.ts-slot-cell.blocked   { background:#0a0a0a; border:1.5px dashed #1c1c1c; opacity:.65; cursor:pointer; }
+.ts-slot-cell.blocked:hover { border-color:#3a3a3a; opacity:1; }
+
+.ts-sc-time  { font-size:13px; font-weight:700; color:#fff; }
+.ts-sc-price { font-size:10px; color:#666; }
+.ts-sc-state { font-size:9px; font-weight:600; display:flex; align-items:center; gap:3px; margin-top:2px; }

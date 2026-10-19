@@ -1,0 +1,175 @@
+/* ─── Root ─── */
+.ka-wrap { min-height:100vh; background:#0a0a0a; display:flex; flex-direction:column; }
+
+/* Top bar */
+.ka-topbar { display:flex; justify-content:space-between; align-items:center; padding:14px 16px; background:#111; border-bottom:1px solid #1c1c1c; position:sticky; top:0; z-index:50; }
+.ka-back-btn { width:36px; height:36px; background:#1a1a1a; border:1px solid #2a2a2a; border-radius:10px; color:#888; display:flex; align-items:center; justify-content:center; cursor:pointer; }
+.ka-topbar-logo { display:flex; align-items:center; gap:8px; font-size:20px; }
+.ka-brand { font-size:16px; font-weight:800; color:#fff; }
+.ka-brand-tag { font-size:11px; font-weight:700; color:#f5a623; background:rgba(245,166,35,.12); padding:2px 7px; border-radius:6px; margin-left:2px; }
+
+.ka-body { flex:1; overflow-y:auto; padding:16px 16px 48px; display:flex; flex-direction:column; gap:14px; }
+
+/* Mode switch */
+.ka-mode-switch { display:flex; background:#111; border:1px solid #1c1c1c; border-radius:14px; padding:4px; }
+.ka-mode-btn { flex:1; background:none; border:none; color:#444; font-size:13px; font-weight:600; padding:12px; border-radius:11px; cursor:pointer; font-family:inherit; transition:all .2s; }
+.ka-mode-btn.on { background:#f5a623; color:#000; box-shadow:0 2px 12px rgba(245,166,35,.3); }
+
+/* Login hero */
+.ka-login-hero { text-align:center; padding:10px 0 4px; }
+.ka-login-icon { font-size:48px; background:#1a1a1a; border:1px solid #2a2a2a; width:70px; height:70px; border-radius:20px; display:inline-flex; align-items:center; justify-content:center; margin-bottom:14px; }
+.ka-login-hero h2 { font-size:24px; font-weight:800; color:#fff; line-height:1.3; margin-bottom:6px; }
+.ka-login-hero p  { font-size:13px; color:#555; }
+
+/* Card */
+.ka-card { background:#111; border:1px solid #1c1c1c; border-radius:16px; padding:16px; display:flex; flex-direction:column; gap:14px; }
+
+/* Field */
+.ka-field       { display:flex; flex-direction:column; gap:6px; }
+.ka-field-lbl   { font-size:10px; color:#555; text-transform:uppercase; letter-spacing:.7px; font-weight:700; }
+.ka-field input, .ka-field select {
+  background:#0a0a0a; border:1px solid #222; border-radius:12px;
+  padding:13px 16px; color:#fff; font-size:14px; font-weight:500;
+  outline:none; transition:border-color .2s; font-family:inherit;
+  width:100%; box-sizing:border-box;
+}
+.ka-field input:focus, .ka-field select:focus { border-color:#f5a623; }
+.ka-field select { -webkit-appearance:none; }
+.ka-inp-err { border-color:#e53935 !important; }
+.ka-ferr    { font-size:10px; color:#e53935; font-weight:600; }
+.ka-field-outer { display:flex; flex-direction:column; gap:8px; }
+.ka-2col    { display:grid; grid-template-columns:1fr 1fr; gap:10px; }
+.ka-required { color:#e53935; }
+
+/* Phone */
+.ka-phone { display:flex; background:#0a0a0a; border:1px solid #222; border-radius:12px; overflow:hidden; transition:border-color .2s; }
+.ka-phone:focus-within { border-color:#f5a623; }
+.ka-phone > span { padding:13px 12px; color:#f5a623; font-size:13px; font-weight:700; border-right:1px solid #222; flex-shrink:0; white-space:nowrap; }
+.ka-phone input  { background:none; border:none; flex:1; padding:13px 14px; color:#fff; font-size:14px; font-family:inherit; outline:none; }
+
+/* Password */
+.ka-pw { position:relative; }
+.ka-pw input { padding-right:48px; }
+.ka-pw-eye { position:absolute; right:14px; top:50%; transform:translateY(-50%); background:none; border:none; font-size:16px; cursor:pointer; }
+
+/* Owner type */
+.ka-owner-type-row { display:flex; gap:8px; }
+.ka-owner-type { flex:1; background:#111; border:1px solid #1c1c1c; border-radius:12px; padding:12px 6px; display:flex; flex-direction:column; align-items:center; gap:5px; font-size:11px; font-weight:600; color:#555; cursor:pointer; font-family:inherit; transition:all .2s; }
+.ka-owner-type span:first-child { font-size:22px; }
+.ka-owner-type.on { border-color:#f5a623; color:#f5a623; background:rgba(245,166,35,.06); }
+
+/* KYC */
+.ka-kyc-banner { display:flex; align-items:flex-start; gap:12px; background:rgba(245,166,35,.06); border:1px solid rgba(245,166,35,.2); border-radius:14px; padding:14px; }
+.ka-kyc-banner > span { font-size:22px; flex-shrink:0; margin-top:1px; }
+.ka-kyc-t { font-size:13px; font-weight:700; color:#f5a623; margin:0 0 3px; }
+.ka-kyc-s { font-size:11px; color:#666; margin:0; line-height:1.5; }
+
+/* Ownership */
+.ka-ownership-row { display:flex; flex-direction:column; gap:8px; }
+.ka-ownership-btns { display:flex; gap:8px; }
+.ka-own-btn { flex:1; background:#111; border:1px solid #1c1c1c; border-radius:10px; padding:10px 6px; font-size:12px; font-weight:600; color:#555; cursor:pointer; font-family:inherit; transition:all .2s; text-align:center; }
+.ka-own-btn.on { border-color:#f5a623; color:#f5a623; background:rgba(245,166,35,.06); }
+
+/* Upload grid */
+.ka-upload-grid { display:grid; grid-template-columns:1fr 1fr; gap:10px; }
+.ka-upload-box { background:#111; border:1.5px dashed #222; border-radius:16px; padding:16px 10px; display:flex; flex-direction:column; align-items:center; gap:6px; cursor:pointer; transition:all .2s; text-align:center; }
+.ka-upload-box:hover, .ka-upload-box:focus-within { border-color:#f5a623; }
+.ka-upload-box.uploaded { border-style:solid; border-color:rgba(76,175,80,.5); background:rgba(76,175,80,.04); }
+.ka-upload-box.error    { border-color:#e53935; border-style:dashed; }
+.ka-upl-icon  { font-size:26px; }
+.ka-upl-title { font-size:11px; font-weight:700; color:#ccc; }
+.ka-upl-sub   { font-size:10px; color:#555; line-height:1.4; }
+.ka-upl-done  { color:#4caf50; font-weight:600; }
+.ka-doc-note  { font-size:10px; color:#444; text-align:center; }
+
+/* Sports chips */
+.ka-sports-chips  { display:flex; flex-wrap:wrap; gap:8px; }
+.ka-sport-chip    { background:#111; border:1px solid #222; border-radius:24px; padding:9px 14px; display:flex; align-items:center; gap:7px; font-size:12px; font-weight:600; color:#555; cursor:pointer; font-family:inherit; transition:all .15s; }
+.ka-sport-chip span:first-child { font-size:18px; }
+.ka-sport-chip.on { font-weight:700; }
+
+/* Amenity chips */
+.ka-amenity-chips { display:flex; flex-wrap:wrap; gap:7px; }
+.ka-amenity-chip  { background:#111; border:1px solid #222; border-radius:20px; padding:7px 14px; font-size:12px; font-weight:500; color:#555; cursor:pointer; font-family:inherit; transition:all .15s; }
+.ka-amenity-chip.on { background:rgba(245,166,35,.1); border-color:rgba(245,166,35,.35); color:#f5a623; font-weight:600; }
+
+/* Court block */
+.ka-courts-hdr  { display:flex; justify-content:space-between; align-items:center; }
+.ka-add-court   { background:rgba(245,166,35,.12); border:1px solid rgba(245,166,35,.25); color:#f5a623; font-size:12px; font-weight:700; padding:8px 14px; border-radius:10px; cursor:pointer; font-family:inherit; }
+.ka-court-block { background:#111; border:1px solid #1c1c1c; border-radius:16px; padding:14px; display:flex; flex-direction:column; gap:12px; }
+.ka-court-block-hd { display:flex; justify-content:space-between; align-items:center; font-size:13px; font-weight:700; color:#f5a623; }
+.ka-del-court   { background:rgba(229,57,53,.1); border:none; color:#e53935; font-size:14px; width:28px; height:28px; border-radius:8px; cursor:pointer; display:flex; align-items:center; justify-content:center; }
+.ka-court-features { display:flex; gap:10px; }
+.ka-feature-toggle { display:flex; align-items:center; gap:7px; background:#0a0a0a; border:1px solid #222; border-radius:10px; padding:9px 14px; font-size:12px; font-weight:600; color:#555; cursor:pointer; transition:all .2s; flex:1; justify-content:center; }
+.ka-feature-toggle input { display:none; }
+.ka-feature-toggle span { font-size:12px; }
+.ka-feature-toggle.on { border-color:rgba(245,166,35,.35); color:#f5a623; background:rgba(245,166,35,.06); }
+
+/* Payout */
+.ka-payout-banner { display:flex; align-items:center; gap:12px; background:rgba(76,175,80,.06); border:1px solid rgba(76,175,80,.2); border-radius:14px; padding:14px; }
+.ka-payout-banner > span { font-size:22px; flex-shrink:0; }
+.ka-payout-banner p { font-size:13px; color:#4caf50; font-weight:600; margin:0; line-height:1.5; }
+.ka-or-row  { display:flex; align-items:center; gap:10px; }
+.ka-or-line { flex:1; height:1px; background:#1c1c1c; }
+.ka-or-row > span { font-size:11px; color:#444; font-weight:600; flex-shrink:0; }
+.ka-toggle-row { display:flex; justify-content:space-between; align-items:center; gap:12px; }
+.ka-toggle-label { font-size:14px; font-weight:700; color:#fff; margin-bottom:3px; }
+.ka-toggle-sub   { font-size:11px; color:#555; }
+.ka-toggle { width:46px; height:26px; background:#1a1a1a; border:1px solid #2a2a2a; border-radius:13px; position:relative; cursor:pointer; transition:background .25s; flex-shrink:0; }
+.ka-toggle.on { background:#f5a623; border-color:#f5a623; }
+.ka-toggle-knob { position:absolute; top:3px; left:3px; width:18px; height:18px; background:#fff; border-radius:50%; transition:left .25s; }
+.ka-toggle.on .ka-toggle-knob { left:23px; }
+
+/* Platform fee */
+.ka-platform-fee-card { background:#111; border:1px solid #1c1c1c; border-radius:16px; padding:16px; display:flex; flex-direction:column; gap:10px; }
+.ka-pf-hd   { font-size:12px; font-weight:700; color:#f5a623; text-transform:uppercase; letter-spacing:.5px; }
+.ka-pf-desc { font-size:12px; color:#666; line-height:1.6; }
+.ka-pf-table { display:flex; flex-direction:column; gap:8px; border-top:1px solid #1c1c1c; padding-top:10px; }
+.ka-pf-row  { display:flex; justify-content:space-between; font-size:12px; color:#777; }
+.ka-pf-row span:last-child { color:#ccc; font-weight:600; }
+.ka-pf-row .green { color:#4caf50; }
+.ka-pf-example { font-size:11px; color:#888; background:#0a0a0a; border:1px solid #1c1c1c; border-radius:8px; padding:8px 12px; }
+.ka-pf-example span { color:#f5a623; font-weight:700; }
+
+/* Step */
+.ka-step-body { display:flex; flex-direction:column; gap:14px; }
+.ka-step-title { display:flex; align-items:center; gap:10px; font-size:17px; font-weight:800; color:#fff; }
+.ka-step-title span { font-size:22px; }
+
+/* Stepper */
+.ka-stepper { display:flex; align-items:flex-start; gap:0; overflow-x:auto; padding-bottom:4px; }
+.ka-stepper::-webkit-scrollbar { height:0; }
+.ka-step-item { display:flex; flex-direction:column; align-items:center; gap:5px; flex:1; position:relative; }
+.ka-step-circle { width:32px; height:32px; border-radius:50%; background:#111; border:2px solid #222; color:#444; font-size:14px; display:flex; align-items:center; justify-content:center; z-index:1; transition:all .25s; flex-shrink:0; }
+.ka-step-item.done .ka-step-circle   { background:#f5a623; border-color:#f5a623; color:#000; }
+.ka-step-item.active .ka-step-circle { border-color:#f5a623; background:rgba(245,166,35,.1); color:#f5a623; box-shadow:0 0 0 3px rgba(245,166,35,.15); }
+.ka-step-lbl { font-size:9px; font-weight:700; text-transform:uppercase; letter-spacing:.4px; color:#444; }
+.ka-step-item.done .ka-step-lbl, .ka-step-item.active .ka-step-lbl { color:#f5a623; }
+.ka-step-line { position:absolute; top:15px; left:50%; width:100%; height:2px; background:#1c1c1c; z-index:0; }
+.ka-step-line.filled { background:#f5a623; }
+
+/* Buttons */
+.ka-forgot  { background:none; border:none; color:#f5a623; font-size:12px; cursor:pointer; font-family:inherit; padding:0; text-align:right; align-self:flex-end; }
+.ka-cta-btn { width:100%; background:#f5a623; color:#000; border:none; border-radius:14px; padding:17px; font-size:15px; font-weight:800; cursor:pointer; font-family:inherit; letter-spacing:.3px; box-shadow:0 4px 20px rgba(245,166,35,.25); transition:opacity .2s; }
+.ka-cta-btn:disabled { opacity:.5; cursor:not-allowed; }
+.ka-cta-btn.flex1 { flex:1; width:auto; }
+.ka-nav-row { display:flex; gap:10px; }
+.ka-prev    { background:#111; border:1px solid #222; color:#888; border-radius:14px; padding:17px 20px; font-size:14px; font-weight:600; cursor:pointer; font-family:inherit; }
+
+/* Why */
+.ka-why-grid { display:grid; grid-template-columns:1fr 1fr; gap:10px; background:#111; border:1px solid #1c1c1c; border-radius:16px; padding:16px; }
+.ka-why-item { display:flex; align-items:center; gap:10px; font-size:12px; color:#777; font-weight:500; }
+.ka-why-item span:first-child { font-size:20px; flex-shrink:0; }
+
+/* Trust signals */
+.ka-trust-strip   { display:flex; justify-content:center; gap:20px; padding:14px 16px 4px; }
+.ka-trust-item    { display:flex; align-items:center; gap:5px; font-size:11px; color:#888; font-weight:600; }
+.ka-trust-item span { color:#ccc; }
+.ka-trust-tagline { text-align:center; font-size:11px; color:#555; padding:4px 24px 14px; line-height:1.5; }
+
+/* OTP */
+.ka-otp-send-btn { background:#f5a623; color:#000; border:none; border-radius:8px; padding:7px 12px; font-size:11px; font-weight:800; cursor:pointer; font-family:inherit; flex-shrink:0; }
+.ka-otp-send-btn:disabled { background:#2a2a2a; color:#555; cursor:default; }
+.ka-otp-verified { color:#4caf50; font-size:12px; font-weight:700; flex-shrink:0; }
+.ka-otp-hint { font-size:11px; color:#555; margin-top:6px; }
+.ka-otp-hint strong { color:#f5a623; }

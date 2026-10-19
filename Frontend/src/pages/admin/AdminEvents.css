@@ -1,0 +1,379 @@
+.adm-evt-page {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  background: #0a0a0a;
+}
+
+.adm-evt-scroll {
+  flex: 1;
+  padding: 12px 16px 0;
+  overflow-y: auto;
+}
+
+.adm-evt-toprow {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 14px;
+}
+
+.adm-evt-title {
+  font-size: 22px;
+  font-weight: 800;
+  color: #fff;
+  margin: 0;
+}
+
+.adm-evt-sub {
+  font-size: 12px;
+  color: #555;
+  margin-top: 2px;
+}
+
+.adm-evt-create-btn {
+  background: #f5a623;
+  color: #000;
+  border: none;
+  border-radius: 12px;
+  padding: 10px 16px;
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: opacity 0.2s;
+}
+
+.adm-evt-create-btn:hover { opacity: 0.88; }
+
+/* Form */
+.adm-evt-form-card {
+  background: #141414;
+  border: 1px solid #2a2a2a;
+  border-radius: 16px;
+  padding: 16px;
+  margin-bottom: 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.adm-evt-form-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 16px;
+  font-weight: 700;
+  color: #fff;
+  margin-bottom: 4px;
+}
+
+.adm-evt-form-close {
+  background: none;
+  border: none;
+  color: #555;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+/* reuse form-field from AdminHome.css */
+.adm-form-field {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.adm-form-field label {
+  font-size: 10px;
+  color: #555;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  font-weight: 600;
+}
+
+.adm-form-field input,
+.adm-form-field textarea,
+.adm-form-select {
+  background: #111;
+  border: 1px solid #2a2a2a;
+  border-radius: 10px;
+  padding: 10px 12px;
+  color: #fff;
+  font-size: 13px;
+  outline: none;
+  transition: border-color 0.2s;
+  font-family: inherit;
+  resize: none;
+  width: 100%;
+}
+
+.adm-form-field input:focus,
+.adm-form-field textarea:focus { border-color: #f5a623; }
+
+.adm-form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+.adm-add-loc-btn {
+  background: none;
+  border: 1px dashed #2a2a2a;
+  color: #555;
+  font-size: 12px;
+  padding: 8px;
+  border-radius: 8px;
+  cursor: pointer;
+  margin-top: 6px;
+  width: 100%;
+  transition: border-color 0.2s;
+}
+
+.adm-add-loc-btn:hover { border-color: #f5a623; color: #f5a623; }
+
+.adm-evt-checks {
+  display: flex;
+  gap: 20px;
+}
+
+.adm-check-label {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  font-size: 13px;
+  color: #888;
+  cursor: pointer;
+}
+
+.adm-check-label input[type=checkbox] {
+  width: 16px;
+  height: 16px;
+  accent-color: #f5a623;
+  padding: 0;
+}
+
+.adm-edit-warning {
+  background: rgba(224,92,92,0.08);
+  border: 1px solid rgba(224,92,92,0.25);
+  border-radius: 10px;
+  padding: 10px 12px;
+  font-size: 12px;
+  color: #e05c5c;
+}
+
+.adm-form-actions {
+  display: flex;
+  gap: 10px;
+}
+
+.adm-form-save {
+  flex: 1;
+  background: #f5a623;
+  color: #000;
+  border: none;
+  border-radius: 10px;
+  padding: 12px;
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.adm-form-cancel {
+  flex: 1;
+  background: #111;
+  color: #aaa;
+  border: 1px solid #2a2a2a;
+  border-radius: 10px;
+  padding: 12px;
+  font-size: 13px;
+  cursor: pointer;
+}
+
+/* Event card */
+.adm-evt-card {
+  background: #1a1a1a;
+  border: 1px solid #2a2a2a;
+  border-radius: 16px;
+  padding: 16px;
+  margin-bottom: 12px;
+  transition: border-color 0.2s;
+}
+
+.adm-evt-card:hover { border-color: #3a3a3a; }
+
+.adm-evt-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 10px;
+}
+
+.adm-evt-card-name {
+  font-size: 15px;
+  font-weight: 700;
+  color: #fff;
+  margin-bottom: 6px;
+}
+
+.adm-evt-tags {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.adm-evt-sport-tag {
+  background: rgba(245,166,35,0.12);
+  color: #f5a623;
+  font-size: 10px;
+  font-weight: 700;
+  padding: 3px 9px;
+  border-radius: 7px;
+}
+
+.adm-evt-qr-tag {
+  background: #1e1e1e;
+  color: #888;
+  font-size: 10px;
+  padding: 3px 9px;
+  border-radius: 7px;
+}
+
+.adm-evt-locked-tag {
+  background: rgba(224,92,92,0.1);
+  color: #e05c5c;
+  font-size: 10px;
+  padding: 3px 9px;
+  border-radius: 7px;
+}
+
+.adm-evt-edit-btn {
+  background: #2a2a2a;
+  color: #aaa;
+  border: 1px solid #3a3a3a;
+  border-radius: 9px;
+  padding: 7px 12px;
+  font-size: 11px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+  white-space: nowrap;
+}
+
+.adm-evt-edit-btn:hover:not(.adm-evt-edit-disabled) {
+  border-color: #f5a623;
+  color: #f5a623;
+}
+
+.adm-evt-edit-disabled {
+  color: #555;
+  cursor: not-allowed;
+  border-color: #2a2a2a;
+}
+
+.adm-evt-details {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-bottom: 12px;
+}
+
+.adm-evt-detail-row {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  font-size: 12px;
+  color: #888;
+}
+
+/* Teams section */
+.adm-evt-teams {
+  border-top: 1px solid #2a2a2a;
+  padding-top: 12px;
+  margin-bottom: 10px;
+}
+
+.adm-evt-teams-label {
+  font-size: 11px;
+  color: #555;
+  letter-spacing: 0.5px;
+  margin-bottom: 8px;
+  font-weight: 600;
+}
+
+.adm-evt-teams-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 7px;
+  align-items: center;
+}
+
+.adm-evt-team-chip {
+  background: #2a2a2a;
+  color: #ccc;
+  font-size: 12px;
+  font-weight: 600;
+  padding: 6px 10px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.adm-team-remove {
+  background: none;
+  border: none;
+  color: #555;
+  font-size: 11px;
+  cursor: pointer;
+  padding: 0;
+  line-height: 1;
+}
+
+.adm-team-remove:hover { color: #e05c5c; }
+
+.adm-evt-invite-btn {
+  background: #1a1a1a;
+  border: 1px dashed #3a3a3a;
+  color: #666;
+  font-size: 12px;
+  padding: 6px 12px;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.adm-evt-invite-btn:hover { border-color: #f5a623; color: #f5a623; }
+
+.adm-invite-form {
+  margin-top: 10px;
+  background: #111;
+  border-radius: 12px;
+  padding: 12px;
+  border: 1px solid #2a2a2a;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.adm-evt-desc {
+  font-size: 12px;
+  color: #555;
+  line-height: 1.6;
+  border-top: 1px solid #1e1e1e;
+  padding-top: 10px;
+}
+
+/* ── Invite Players ── */
+.adm-invite-toast { position:fixed; top:58px; left:50%; transform:translateX(-50%); background:#1e3d1e; color:#4caf50; border:1px solid #2e6b2e; padding:9px 18px; border-radius:20px; font-size:12px; font-weight:700; z-index:999; white-space:nowrap; pointer-events:none; }
+.adm-evt-invite-player-btn { background:rgba(245,166,35,.1); border:1px solid rgba(245,166,35,.25); color:#f5a623; font-size:11px; font-weight:700; padding:8px 14px; border-radius:10px; cursor:pointer; font-family:inherit; margin-top:8px; transition:all .2s; }
+.adm-evt-invite-player-btn:hover { background:rgba(245,166,35,.18); }
+.adm-player-invite-panel { background:#0a0a0a; border:1px solid #f5a623; border-radius:14px; padding:14px; margin-top:10px; }
+.adm-player-invite-hd { font-size:11px; font-weight:700; color:#f5a623; text-transform:uppercase; letter-spacing:.5px; margin:0 0 10px; }
+.adm-player-invite-list { display:flex; flex-direction:column; gap:6px; margin-bottom:12px; }
+.adm-player-inv-row { display:flex; align-items:center; gap:10px; background:#111; border:1px solid #1c1c1c; border-radius:11px; padding:10px 12px; cursor:pointer; transition:all .15s; }
+.adm-player-inv-row.selected { border-color:rgba(76,175,80,.4); background:rgba(76,175,80,.05); }
+.adm-pi-avatar { width:34px; height:34px; border-radius:50%; background:#f5a623; display:flex; align-items:center; justify-content:center; font-size:11px; font-weight:800; color:#000; flex-shrink:0; }
+.adm-pi-info { flex:1; min-width:0; }
+.adm-pi-name { display:block; font-size:13px; font-weight:600; color:#fff; }
+.adm-pi-meta { display:block; font-size:10px; color:#555; margin-top:1px; }
+.adm-pi-check { width:22px; height:22px; border-radius:50%; border:1.5px solid #2a2a2a; display:flex; align-items:center; justify-content:center; font-size:12px; font-weight:800; color:#4caf50; flex-shrink:0; transition:all .15s; }
+.adm-pi-check.checked { background:#4caf50; border-color:#4caf50; color:#fff; }

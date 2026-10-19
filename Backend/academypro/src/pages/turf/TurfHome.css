@@ -1,0 +1,94 @@
+.th-page   { display:flex; flex-direction:column; min-height:100vh; background:#0a0a0a; }
+.th-scroll { flex:1; overflow-y:auto; }
+
+/* Availability */
+.th-avail-bar { display:flex; justify-content:space-between; align-items:center; padding:11px 16px; }
+.th-avail-bar.open   { background:rgba(76,175,80,.05); border-bottom:1px solid rgba(76,175,80,.12); }
+.th-avail-bar.closed { background:rgba(229,57,53,.04); border-bottom:1px solid rgba(229,57,53,.12); }
+.th-avail-left { display:flex; align-items:center; gap:10px; }
+.th-avail-dot { width:9px; height:9px; border-radius:50%; flex-shrink:0; }
+.th-avail-dot.open  { background:#4caf50; box-shadow:0 0 8px rgba(76,175,80,.5); animation:blink 2s infinite; }
+.th-avail-dot.closed { background:#e53935; }
+@keyframes blink { 0%,100%{opacity:1}50%{opacity:.5} }
+.th-avail-title { font-size:13px; font-weight:700; color:#fff; margin:0; }
+.th-avail-sub   { font-size:10px; color:#555; margin:2px 0 0; }
+.th-toggle { width:44px; height:24px; background:#1c1c1c; border:1px solid #2a2a2a; border-radius:12px; position:relative; cursor:pointer; transition:background .25s; flex-shrink:0; }
+.th-toggle.on { background:#4caf50; border-color:#4caf50; }
+.th-toggle-k { position:absolute; top:3px; left:3px; width:16px; height:16px; background:#fff; border-radius:50%; transition:left .25s; }
+.th-toggle.on .th-toggle-k { left:23px; }
+
+/* Revenue strip */
+.th-rev-strip { display:flex; align-items:center; background:#111; border-bottom:1px solid #1c1c1c; padding:14px 16px; gap:0; }
+.th-rev-main  { display:flex; align-items:center; gap:10px; flex:1.5; }
+.th-rev-icon  { font-size:24px; }
+.th-rev-val   { font-size:22px; font-weight:800; color:#f5a623; margin:0; line-height:1; }
+.th-rev-lbl   { font-size:10px; color:#555; font-weight:600; margin:3px 0 0; text-transform:uppercase; letter-spacing:.5px; }
+.th-rev-divider { width:1px; height:36px; background:#222; flex-shrink:0; margin:0 12px; }
+.th-rev-mini  { flex:1; text-align:center; }
+
+/* Stats row */
+.th-stats-row { display:grid; grid-template-columns:repeat(4,1fr); gap:6px; padding:12px 16px 10px; }
+.th-stat-box  { background:#111; border:1px solid #1c1c1c; border-radius:14px; padding:12px 6px; display:flex; flex-direction:column; align-items:center; gap:3px; cursor:pointer; }
+.th-stat-box.green { border-color:rgba(76,175,80,.25); }
+.th-stat-box.amber { border-color:rgba(245,166,35,.25); }
+.th-stat-num   { font-size:20px; font-weight:800; color:#fff; line-height:1; }
+.th-stat-box.green .th-stat-num { color:#4caf50; }
+.th-stat-box.amber .th-stat-num { color:#f5a623; }
+.th-stat-label { font-size:8px; color:#555; font-weight:600; text-transform:uppercase; letter-spacing:.3px; text-align:center; }
+
+/* Quick actions */
+.th-qa-row { display:grid; grid-template-columns:repeat(4,1fr); gap:8px; padding:4px 16px 14px; }
+.th-qa-btn { background:#111; border:1px solid #1c1c1c; border-radius:14px; padding:14px 6px; display:flex; flex-direction:column; align-items:center; gap:5px; cursor:pointer; font-size:9px; font-weight:700; color:#666; font-family:inherit; transition:all .2s; text-transform:uppercase; letter-spacing:.3px; white-space:pre-line; line-height:1.4; text-align:center; }
+.th-qa-icon { font-size:22px; }
+.th-qa-btn:hover { border-color:#3a3a3a; color:#aaa; }
+
+/* Section header */
+.th-section-hdr { display:flex; justify-content:space-between; align-items:center; padding:8px 16px; }
+.th-section-hdr > span { font-size:9px; color:#444; letter-spacing:1.3px; font-weight:700; text-transform:uppercase; }
+.th-section-hdr > button { background:none; border:none; color:#f5a623; font-size:11px; font-weight:700; cursor:pointer; font-family:inherit; }
+
+/* ── VENUE PREVIEW CARD ── */
+.th-venue-card { background:#111; border:1px solid #1c1c1c; border-radius:18px; overflow:hidden; margin-bottom:6px; }
+.th-vc-banner  { height:130px; position:relative; display:flex; align-items:center; justify-content:center; overflow:hidden; }
+.th-vc-sport-bg { font-size:80px; opacity:.18; position:absolute; user-select:none; }
+.th-vc-overlay  { position:absolute; inset:0; display:flex; justify-content:space-between; align-items:flex-end; padding:12px 14px; background:linear-gradient(to top,rgba(0,0,0,.7) 0%,transparent 60%); }
+.th-vc-live-badge { background:#4caf50; color:#000; font-size:9px; font-weight:800; padding:4px 10px; border-radius:8px; letter-spacing:.5px; }
+.th-vc-rating     { background:rgba(0,0,0,.5); color:#f5a623; font-size:12px; font-weight:700; padding:4px 10px; border-radius:8px; border:1px solid rgba(245,166,35,.3); }
+.th-vc-body { padding:14px; }
+.th-vc-top  { display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:10px; }
+.th-vc-name { font-size:15px; font-weight:800; color:#fff; margin:0 0 3px; }
+.th-vc-loc  { font-size:11px; color:#666; margin:0; }
+.th-vc-price-col { text-align:right; flex-shrink:0; }
+.th-vc-price     { display:block; font-size:18px; font-weight:800; color:#f5a623; }
+.th-vc-price-sub { font-size:10px; color:#555; }
+.th-vc-sport-tags { display:flex; gap:6px; flex-wrap:wrap; margin-bottom:10px; }
+.th-vc-sport-tag  { font-size:11px; font-weight:600; padding:5px 10px; border-radius:8px; border:1px solid transparent; }
+.th-vc-amenity-row { display:flex; gap:6px; flex-wrap:wrap; margin-bottom:12px; }
+.th-vc-amenity    { font-size:10px; color:#666; background:#1a1a1a; border:1px solid #2a2a2a; padding:4px 10px; border-radius:6px; }
+.th-vc-bottom { display:flex; justify-content:space-between; align-items:center; }
+.th-vc-avail { font-size:11px; color:#4caf50; font-weight:600; }
+.th-vc-book-btn { background:#f5a623; color:#000; border:none; border-radius:10px; padding:9px 18px; font-size:12px; font-weight:800; cursor:default; font-family:inherit; }
+
+/* Schedule */
+.th-schedule { padding:0 16px; display:flex; flex-direction:column; gap:6px; }
+.th-schedule-row { display:flex; align-items:center; gap:12px; background:#111; border:1px solid #1c1c1c; border-radius:13px; padding:11px 13px; }
+.th-schedule-row.pending { border-color:rgba(245,166,35,.25); }
+.th-sch-time  { min-width:52px; display:flex; flex-direction:column; align-items:center; flex-shrink:0; }
+.th-sch-t     { font-size:12px; font-weight:700; color:#fff; }
+.th-sch-sport { font-size:16px; margin-top:1px; }
+.th-sch-bar   { width:1px; height:30px; background:#222; flex-shrink:0; }
+.th-sch-info  { flex:1; min-width:0; }
+.th-sch-name  { display:block; font-size:13px; font-weight:700; color:#fff; }
+.th-sch-court { display:block; font-size:10px; color:#555; margin-top:2px; }
+.th-sch-right { display:flex; flex-direction:column; align-items:flex-end; gap:3px; flex-shrink:0; }
+.th-sch-amt   { font-size:14px; font-weight:800; color:#f5a623; }
+.th-sch-badge { font-size:8px; font-weight:700; padding:2px 7px; border-radius:5px; text-transform:uppercase; letter-spacing:.4px; }
+.th-sch-badge.confirmed { background:rgba(76,175,80,.12); color:#4caf50; }
+.th-sch-badge.pending   { background:rgba(245,166,35,.1); color:#f5a623; }
+
+/* Activity */
+.th-activity { padding:0 16px; display:flex; flex-direction:column; gap:8px; }
+.th-act-row  { display:flex; align-items:flex-start; gap:12px; }
+.th-act-icon { width:36px; height:36px; border-radius:10px; display:flex; align-items:center; justify-content:center; font-size:16px; flex-shrink:0; }
+.th-act-text { font-size:12px; color:#ccc; margin:0 0 3px; line-height:1.4; }
+.th-act-time { font-size:10px; color:#444; }

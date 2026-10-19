@@ -1,11 +1,12 @@
 # Sports-in-One — Rebuild
 
-Sports-in-One is a sports academy and turf-booking platform. The uploaded source archive is the application baseline; this private repository is its active rebuild target.
+Sports-in-One is a sports academy and turf-booking platform. This private repository is the active rebuild target, restored from the original application source with initial configuration and security hardening.
 
-## Current status
-- The source application includes a React/Vite frontend, an Express/Prisma API, and a second academy-focused frontend that overlaps substantially with the primary frontend.
-- The app source is not yet present on `main`; work is being staged on `feature/restore-app-and-hardening`.
-- Existing dashboards include demo/mock values, and API routes need authorization before production use.
+## Application surfaces
+
+- `Frontend/` — primary React + Vite frontend for student, admin, and turf-owner flows.
+- `Backend/sports-app-backend/` — Express REST API, Prisma ORM, and PostgreSQL.
+- `Backend/academypro/` — second React/Vite app that overlaps with the primary frontend. Treat it as a legacy/reference surface until a single deployable frontend is selected.
 
 ## Run locally
 
@@ -30,15 +31,15 @@ npm install
 npm run dev
 ```
 
-## Environment
-Backend `.env` should set `NODE_ENV`, `PORT`, `DATABASE_URL`, `JWT_SECRET`, and `CORS_ORIGIN`. Frontend supports `VITE_API_BASE_URL`. Never commit `.env`, secrets, private data or database dumps.
+Backend environment variables: `NODE_ENV`, `PORT`, `DATABASE_URL`, `JWT_SECRET`, and `CORS_ORIGIN`. The frontend supports `VITE_API_BASE_URL`. Never commit `.env`, production credentials, private data, or database dumps.
 
-## Production blockers to resolve before launch
-1. Add JWT verification and role/ownership enforcement to every protected API route. Public signup must not allow self-assignment of `ADMIN`.
-2. Keep one canonical Prisma schema and add migrations. The legacy `src/prisma/schema.prisma` conflicts with `prisma/schema.prisma` and requires reconciliation.
-3. Make turf booking atomic and enforce that the selected slot belongs to the chosen turf; derive student identity from the authenticated session.
-4. Replace dashboard mock values and demo actions with persistent data and tested APIs.
-5. Consolidate duplicate frontend apps and test student, coach, admin and turf-owner flows end-to-end.
-6. Configure managed PostgreSQL, secrets, strict CORS, backups, monitoring and production API URLs.
+## Verified gaps to close before production
 
-This rebuild is not production-ready until the above items are implemented and tested.
+1. Add JWT verification and role/ownership enforcement to every protected API route. Public signup must never permit self-assignment of `ADMIN`.
+2. Reconcile `prisma/schema.prisma` and legacy `src/prisma/schema.prisma`, then create/test migrations.
+3. Make turf booking atomic, verify the selected slot belongs to the selected turf, and derive the student identity from the authenticated session.
+4. Replace dashboard mock metrics and demo actions with persistent data and tested APIs.
+5. Consolidate duplicate frontends and test student, coach, admin, and turf-owner workflows end-to-end.
+6. Configure managed PostgreSQL, production secrets, strict CORS, backups, monitoring, and production frontend/API URLs.
+
+A successful build alone does not mean that authentication, bookings, or dashboards are production-ready.

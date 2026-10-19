@@ -1,0 +1,76 @@
+generator client {
+ provider = "prisma-client-js"
+}
+
+datasource db {
+ provider = "postgresql"
+ url      = env("DATABASE_URL")
+}
+
+model User {
+ id        String   @id @default(uuid())
+ name      String
+ email     String   @unique
+ password  String
+ role      String
+ createdAt DateTime @default(now())
+}
+
+model Student {
+ id      String @id @default(uuid())
+ userId  String
+ coachId String?
+ sport   String
+ age     Int
+}
+
+model Performance {
+ id        String   @id @default(uuid())
+ studentId String
+ speed     Int
+ stamina   Int
+ strength  Int
+ skill     Int
+ createdAt DateTime @default(now())
+}
+
+model Turf {
+ id        String @id @default(uuid())
+ name      String
+ location  String
+ sportType String
+ price     Float
+ ownerId   String
+}
+
+model Slot {
+ id        String @id @default(uuid())
+ turfId    String
+ date      String
+ start     String
+ end       String
+ available Boolean @default(true)
+}
+
+model Booking {
+ id        String @id @default(uuid())
+ studentId String
+ turfId    String
+ slotId    String
+ status    String
+}
+
+model Event {
+ id        String @id @default(uuid())
+ coachId   String
+ title     String
+ date      String
+ location  String
+}
+
+model EventInvite {
+ id        String @id @default(uuid())
+ eventId   String
+ studentId String
+ status    String
+}

@@ -1,0 +1,34 @@
+.sn-page { min-height: 100vh; background: var(--bg-primary); }
+
+.sn-header {
+  display: flex; align-items: center; gap: 12px;
+  padding: 14px 16px;
+  background: var(--bg-secondary); border-bottom: 1px solid var(--border);
+}
+
+.sn-header button:first-child { background: none; border: none; color: var(--text-secondary); font-size: 20px; cursor: pointer; }
+.sn-header h2 { font-size: 16px; font-weight: 700; }
+.sn-header p { font-size: 11px; color: var(--text-muted); }
+
+.sn-mark-all { margin-left: auto; background: none; border: none; color: var(--accent); font-size: 12px; cursor: pointer; font-weight: 500; }
+
+.sn-list { padding: 12px 16px; display: flex; flex-direction: column; gap: 8px; }
+
+.sn-item {
+  display: flex; gap: 12px; align-items: flex-start;
+  background: var(--bg-card); border-radius: 12px; padding: 14px;
+  border: 1px solid var(--border); cursor: pointer;
+  transition: border-color 0.2s;
+}
+
+.sn-item.unread { border-left: 3px solid var(--accent); }
+
+.sn-icon { font-size: 22px; flex-shrink: 0; }
+
+.sn-content { flex: 1; }
+
+.sn-title-row { display: flex; align-items: center; gap: 6px; margin-bottom: 4px; }
+.sn-title { font-size: 13px; font-weight: 600; }
+.sn-dot { width: 8px; height: 8px; background: var(--accent); border-radius: 50%; flex-shrink: 0; }
+.sn-desc { font-size: 12px; color: var(--text-secondary); line-height: 1.5; }
+.sn-time { font-size: 11px; color: var(--text-muted); margin-top: 4px; }

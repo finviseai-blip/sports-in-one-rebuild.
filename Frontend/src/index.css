@@ -1,0 +1,215 @@
+:root {
+  --bg-primary: #050505;
+  --bg-secondary: #0c0c0c;
+  --bg-card: rgba(22, 22, 22, 0.7);
+  --bg-card-solid: #161616;
+  --accent: #f5a623;
+  --accent-glow: rgba(245, 166, 35, 0.4);
+  --accent-dim: rgba(245, 166, 35, 0.12);
+  --text-primary: #ffffff;
+  --text-secondary: #a0a0a0;
+  --text-muted: #555555;
+  --border: #222222;
+  --border-light: #333333;
+  --success: #4caf50;
+  --danger: #e53935;
+  --radius: 16px;
+  --radius-sm: 10px;
+  --glass: blur(12px) saturate(180%);
+  --shadow-premium: 0 8px 32px 0 rgba(0, 0, 0, 0.8);
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  -webkit-tap-highlight-color: transparent;
+}
+
+body {
+  font-family: 'Outfit', 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+#root {
+  width: 100%;
+  max-width: 430px;
+  min-height: 100vh;
+  background: var(--bg-primary);
+  position: relative;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Premium Utilities */
+.glass {
+  background: var(--bg-card);
+  backdrop-filter: var(--glass);
+  -webkit-backdrop-filter: var(--glass);
+  border: 1px solid var(--border);
+}
+
+.glow {
+  box-shadow: 0 0 20px var(--accent-glow);
+}
+
+.gradient-text {
+  background: linear-gradient(135deg, #fff 0%, #aaa 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.accent-gradient-text {
+  background: linear-gradient(135deg, var(--accent) 0%, #ffc107 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+button {
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  font-family: inherit;
+}
+
+button:active {
+  transform: scale(0.96);
+}
+
+input {
+  outline: none;
+  font-family: inherit;
+}
+
+/* Animations */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes pulse-glow {
+  0% { box-shadow: 0 0 5px var(--accent-glow); }
+  50% { box-shadow: 0 0 25px var(--accent-glow); }
+  100% { box-shadow: 0 0 5px var(--accent-glow); }
+}
+
+.animate-fade {
+  animation: fadeIn 0.4s ease-out forwards;
+}
+/* ═══════════════════════════════════════════════════════════
+   ROLE-SPECIFIC THEME SYSTEM
+   Applied via: html.theme-dark / html.theme-light / html.theme-default
+   ThemeContext reads role from URL and loads saved preference per role
+   ═══════════════════════════════════════════════════════════ */
+
+/* DEFAULT = current dark palette (no change needed) */
+html.theme-default,
+html.theme-dark {
+  --bg-primary:    #0a0a0a;
+  --bg-secondary:  #111111;
+  --bg-card:       rgba(22,22,22,0.9);
+  --bg-card-solid: #1a1a1a;
+  --text-primary:  #ffffff;
+  --text-secondary:#a0a0a0;
+  --text-muted:    #555555;
+  --border:        #222222;
+  --border-light:  #2a2a2a;
+  --nav-bg:        #0c0c0c;
+  --input-bg:      #111111;
+  --input-border:  #222222;
+  --section-bg:    #111111;
+}
+
+/* LIGHT THEME */
+html.theme-light {
+  --bg-primary:    #f4f6f8;
+  --bg-secondary:  #eaedf1;
+  --bg-card:       rgba(255,255,255,0.95);
+  --bg-card-solid: #ffffff;
+  --text-primary:  #111111;
+  --text-secondary:#444444;
+  --text-muted:    #888888;
+  --border:        #e0e4e8;
+  --border-light:  #d4d8dc;
+  --nav-bg:        #ffffff;
+  --input-bg:      #f8fafc;
+  --input-border:  #dde1e7;
+  --section-bg:    #ffffff;
+  --accent:        #e0940f;
+  --accent-glow:   rgba(224,148,15,0.25);
+  --accent-dim:    rgba(224,148,15,0.10);
+}
+
+/* Apply to body background */
+html.theme-light body { background: #f4f6f8; }
+html.theme-light #root { background: #f4f6f8; }
+
+/* Input and card styles for light theme */
+html.theme-light input,
+html.theme-light textarea,
+html.theme-light select {
+  background: var(--input-bg) !important;
+  color: var(--text-primary) !important;
+  border-color: var(--input-border) !important;
+}
+
+html.theme-light .glass {
+  background: rgba(255,255,255,0.9);
+  border-color: var(--border);
+}
+
+/* Navigation light mode */
+html.theme-light nav,
+html.theme-light .adm-nav,
+html.theme-light .turf-nav,
+html.theme-light .bottom-nav {
+  background: var(--nav-bg) !important;
+  border-top-color: var(--border) !important;
+  box-shadow: 0 -1px 8px rgba(0,0,0,0.08) !important;
+}
+
+html.theme-light .adm-nav-item,
+html.theme-light .turf-nav-btn,
+html.theme-light [class*="-nav-item"] {
+  color: #666 !important;
+}
+
+html.theme-light .adm-nav-item.active,
+html.theme-light [class*="-nav-item"].active { color: var(--accent) !important; }
+
+/* Cards in light mode */
+html.theme-light [class*="-card"],
+html.theme-light [class*="-section"],
+html.theme-light [class*="-panel"] {
+  background: var(--bg-card-solid);
+  border-color: var(--border);
+  color: var(--text-primary);
+}
+
+/* Header light */
+html.theme-light [class*="-hdr"],
+html.theme-light [class*="-header"] {
+  background: var(--bg-card-solid) !important;
+  border-bottom-color: var(--border) !important;
+}
+
+html.theme-light [class*="-hdr"] *,
+html.theme-light [class*="-header"] * { color: var(--text-primary); }
+
+/* Text colors */
+html.theme-light h1,html.theme-light h2,html.theme-light h3,html.theme-light h4,
+html.theme-light p,html.theme-light span,html.theme-light label,html.theme-light div {
+  color: var(--text-primary);
+}
+
+/* Profile + settings toggle */
+html.theme-light [class*="-toggle"] { background: var(--border) !important; }
+html.theme-light [class*="-toggle"].on { background: var(--accent) !important; }
+
+/* Page backgrounds in light mode */
+html.theme-light [class*="-page"] { background: var(--bg-primary) !important; }
+html.theme-light [class*="-scroll"] { background: var(--bg-primary) !important; }

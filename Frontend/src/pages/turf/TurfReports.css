@@ -1,0 +1,40 @@
+.tr-page  { display:flex; flex-direction:column; min-height:100vh; background:var(--bg,#0a0a0a); }
+.tr-scroll{ flex:1; overflow-y:auto; padding-bottom:100px; }
+.tr-header{ display:flex; justify-content:space-between; align-items:center; padding:14px 16px 8px; }
+.tr-title { font-size:20px; font-weight:800; color:var(--text,#fff); margin:0; }
+.tr-period-pills { display:flex; background:#111; border:1px solid #1c1c1c; border-radius:10px; padding:3px; gap:3px; }
+.tr-pill  { background:none; color:#555; border:none; border-radius:7px; padding:6px 12px; font-size:11px; font-weight:700; cursor:pointer; font-family:inherit; transition:all .2s; }
+.tr-pill.on { background:#f5a623; color:#000; }
+.tr-period-label { font-size:11px; color:#555; font-weight:700; padding:0 16px 8px; text-transform:uppercase; letter-spacing:.5px; }
+
+.tr-metrics { display:grid; grid-template-columns:1fr 1fr; gap:8px; padding:0 16px 14px; }
+.tr-metric-card { background:#111; border:1px solid #1c1c1c; border-radius:16px; padding:16px; }
+.tr-metric-val { font-size:24px; font-weight:800; margin:0 0 4px; }
+.tr-metric-lbl { font-size:11px; color:#555; margin:0; text-transform:uppercase; letter-spacing:.5px; font-weight:600; }
+
+.tr-sec-label { font-size:9px; color:#444; letter-spacing:1.3px; font-weight:700; text-transform:uppercase; padding:0 16px 8px; }
+
+.tr-bars { display:flex; gap:8px; align-items:flex-end; height:120px; padding:0 16px 16px; }
+.tr-bar-col { flex:1; display:flex; flex-direction:column; align-items:center; gap:4px; height:100%; }
+.tr-bar-val { font-size:9px; color:#555; font-weight:600; }
+.tr-bar-track { flex:1; width:100%; display:flex; align-items:flex-end; }
+.tr-bar-fill  { width:100%; border-radius:5px 5px 0 0; min-height:4px; transition:height .3s ease; }
+.tr-bar-lbl   { font-size:10px; color:#444; font-weight:600; }
+
+.tr-courts { padding:0 16px; display:flex; flex-direction:column; gap:8px; margin-bottom:14px; }
+.tr-court-card { background:#111; border:1px solid #1c1c1c; border-radius:14px; padding:14px; }
+.tr-court-top  { display:flex; justify-content:space-between; align-items:center; margin-bottom:8px; }
+.tr-court-name { font-size:13px; font-weight:700; color:var(--text,#fff); margin:0 0 2px; }
+.tr-court-sport{ font-size:10px; color:#555; margin:0; }
+.tr-court-rev  { font-size:16px; font-weight:800; color:#f5a623; }
+.tr-occ-bar    { height:6px; background:#1a1a1a; border-radius:3px; overflow:hidden; margin-bottom:5px; }
+.tr-occ-bar > div { height:100%; border-radius:3px; transition:width .4s ease; }
+.tr-occ-label  { font-size:10px; color:#555; margin:0; font-weight:600; }
+
+.tr-players { padding:0 16px; display:flex; flex-direction:column; gap:8px; margin-bottom:14px; }
+.tr-player-row { display:flex; align-items:center; gap:12px; background:#111; border:1px solid #1c1c1c; border-radius:13px; padding:12px; }
+.tr-player-av  { width:38px; height:38px; background:#f5a623; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:13px; font-weight:800; color:#000; flex-shrink:0; }
+.tr-player-info{ flex:1; }
+.tr-player-name{ font-size:13px; font-weight:700; color:var(--text,#fff); margin:0 0 2px; }
+.tr-player-sub { font-size:11px; color:#555; margin:0; }
+.tr-player-spent{ font-size:14px; font-weight:800; color:#f5a623; }
