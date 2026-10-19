@@ -98,7 +98,6 @@ export default function AdminBooking() {
   const [customDuration, setCustomDuration] = useState('')
   const [bookingDone, setBookingDone]   = useState(false)
   const [showAddTurf, setShowAddTurf]   = useState(false)
-  const [editTurf, setEditTurf]         = useState(null)  // my turf being edited
   const [newTurf, setNewTurf]           = useState({ name:'', sport:'Football', location:'', price:'', size:'', turf:'', amenities:'', morningSlots:'', eveningSlots:'' })
 
   function confirmBooking() {
@@ -138,7 +137,6 @@ export default function AdminBooking() {
 
   /* ── BOOKING DETAIL ── */
   if (selected) {
-    const allSlots = [...(selected.slots.morning || []), ...(selected.slots.evening || [])]
     const hrs = selectedDuration === 'Custom' ? (parseFloat(customDuration) || 1) : +selectedDuration.split(' ')[0]
     const totalPrice = hrs * selected.price
 
