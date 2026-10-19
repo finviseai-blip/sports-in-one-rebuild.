@@ -2,7 +2,7 @@
 import { useNavigate } from 'react-router-dom'
 import './TurfNav.css'
 
-export function TurfHeader({ venue = 'Champions Sports Arena', name = 'Raj Patel', rating = 4.8, reviews = 124 }) {
+export function TurfHeader({ venue = 'Champions Sports Arena', rating = 4.8, reviews = 124 }) {
   const navigate = useNavigate()
   return (
     <header className="tkh">
