@@ -16,8 +16,6 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 22
-          cache: npm
-          cache-dependency-path: Frontend/package-lock.json
       - run: npm install --no-audit --no-fund
       - run: npm run build
       - run: npm run lint
@@ -32,8 +30,6 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 22
-          cache: npm
-          cache-dependency-path: Backend/sports-app-backend/package-lock.json
       - run: npm install --no-audit --no-fund
       - run: npm run check
       - run: npx prisma validate
