@@ -4,8 +4,6 @@ import BottomNav from '../../components/BottomNav'
 import './StudentBooking.css'
 
 /* ─── DATA ──────────────────────────────────────────────── */
-const cities = ['Mumbai','Delhi','Bengaluru','Hyderabad','Pune','Chennai','Kolkata','Ahmedabad','Jaipur','Lucknow','Surat','Nagpur']
-
 const sports = [
   { name: 'Football',    icon: '⚽' },
   { name: 'Cricket',     icon: '🏏' },
@@ -136,7 +134,7 @@ export default function StudentBooking() {
   }
 
   const handleReset = () => {
-    setSport(''); setCity(''); setDate(''); setVenue(null)
+    setSport(''); setDate(''); setVenue(null)
     setSlot(''); setPromoCode(''); setPromo(false)
     setStep(1)
   }
