@@ -103,6 +103,7 @@ EOF
 python3 <<'PY'
 from pathlib import Path
 import json
+import shutil
 
 def replace_required(path, old, new):
     p = Path(path)
@@ -332,6 +333,9 @@ package.setdefault("scripts", {})["check"] = (
     "node --check src/controllers/turfController.js"
 )
 p.write_text(json.dumps(package, indent=2) + "\n")
+
+# Remove the temporary checkout so Git never records it as a submodule.
+shutil.rmtree("upstream", ignore_errors=True)
 
 Path(".sports-in-one-source-imported").write_text(
     "Source restored from SRchaudhari15/Sports-in-One and initial hardening applied.\n"
