@@ -52,7 +52,7 @@ const QRCode = () => (
       const pattern = [0,1,2,3,4,5,6,7,13,14,21,27,28,29,30,31,32,33,34,35,41,42,43,44,45,46,47,48]
       return (
         <div key={i} style={{
-          background: pattern.includes(i) || Math.random() > 0.6 ? '#000' : 'transparent',
+          background: pattern.includes(i) || ((i * 17 + i * i * 3) % 10) > 5 ? '#000' : 'transparent',
           borderRadius: 1,
         }} />
       )
