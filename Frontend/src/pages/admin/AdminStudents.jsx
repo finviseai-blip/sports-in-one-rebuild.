@@ -38,8 +38,6 @@ const initialBatches = [
 
 const TABS = ['All', 'Present', 'Absent', 'Performance', 'Batch']
 
-const tooltipStyle = { background:'#111', border:'1px solid #2a2a2a', borderRadius:8, color:'#fff', fontSize:12 }
-
 function getColor(pct) {
   if (pct >= 75) return '#f5a623'
   if (pct >= 60) return '#e0d44e'
