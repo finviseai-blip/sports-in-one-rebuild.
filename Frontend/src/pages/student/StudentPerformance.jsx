@@ -134,7 +134,6 @@ export default function StudentPerformance() {
   const [showCard, setShowCard]   = useState(false)
 
   const score     = Math.round(attrs.reduce((s,a)=>s+a.val,0)/attrs.length)
-  const radarData = attrs.map(a=>({subject:a.name,A:a.val}))
 
   return (
     <div className="sp-page">
