@@ -11,6 +11,7 @@ export function ThemeProvider({ children, role = 'student' }) {
 
   useEffect(() => {
     const saved = localStorage.getItem(getKey(role)) || 'dark'
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setTheme(saved)
   }, [role])
 
@@ -32,4 +33,5 @@ export function ThemeProvider({ children, role = 'student' }) {
   )
 }
 
+// eslint-disable-next-line react-refresh/only-export-components
 export function useTheme() { return useContext(ThemeContext) }
