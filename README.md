@@ -23,6 +23,8 @@ npx prisma db push
 npm run dev
 ```
 
+To provision the first administrator after PostgreSQL is configured, set `ADMIN_NAME`, `ADMIN_EMAIL`, and `ADMIN_PASSWORD` (at least 16 characters) in your environment and run `npm run create-admin`. Public registration only creates student accounts; privileged roles must be provisioned by an authorized operator.
+
 ### Frontend
 ```bash
 cd Frontend
