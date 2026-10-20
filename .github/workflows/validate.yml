@@ -32,6 +32,7 @@ jobs:
           node-version: 22
       - run: npm install --no-audit --no-fund
       - run: npm run check
+      - run: npm test
       - run: npx prisma validate
         env:
           DATABASE_URL: postgresql://postgres:postgres@localhost:5432/sports_db
