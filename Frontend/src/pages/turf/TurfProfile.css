@@ -1,0 +1,44 @@
+/* TurfProfile.css */
+.tp-page{display:flex;flex-direction:column;min-height:100vh;background:#0a0a0a;color:#fff}
+.tp-scroll{padding:0 16px;overflow-y:auto}
+.tp-toast{position:fixed;top:58px;left:50%;transform:translateX(-50%);padding:9px 18px;border-radius:20px;font-size:12px;font-weight:700;z-index:999;white-space:nowrap}
+.tp-toast.success{background:#1e3d1e;color:#4caf50;border:1px solid #2e6b2e}
+.tp-toast.error{background:#3d1e1e;color:#e53935;border:1px solid #6b2e2e}
+.tp-modal-bg{position:fixed;inset:0;background:rgba(0,0,0,.75);display:flex;align-items:center;justify-content:center;z-index:998;padding:24px}
+.tp-modal{background:#1a1a1a;border:1px solid #2a2a2a;border-radius:18px;padding:28px 24px;text-align:center;max-width:320px;width:100%}
+.tp-modal h3{font-size:18px;font-weight:800;margin:0 0 10px}
+.tp-modal p{font-size:12px;color:#666;line-height:1.6;margin:0 0 20px}
+.tp-modal-btns{display:flex;gap:10px}
+.tp-modal-keep{flex:1;background:#111;border:1px solid #2a2a2a;color:#aaa;padding:12px;border-radius:10px;font-size:13px;font-weight:600;cursor:pointer;font-family:inherit}
+.tp-modal-cancel{flex:1;background:none;border:1.5px solid #e53935;color:#e53935;padding:12px;border-radius:10px;font-size:13px;font-weight:700;cursor:pointer;font-family:inherit}
+.tp-header{display:flex;justify-content:space-between;align-items:center;padding:13px 16px;background:#111;border-bottom:1px solid #1c1c1c;position:sticky;top:0;z-index:10}
+.tp-header h2{font-size:17px;font-weight:700;color:#fff;margin:0}
+.tp-back{background:none;border:none;color:#888;font-size:20px;cursor:pointer}
+.tp-edit-btn{background:#111;border:1px solid #1c1c1c;color:#f5a623;font-size:12px;padding:7px 14px;border-radius:8px;cursor:pointer;font-weight:600;font-family:inherit}
+.tp-edit-btn.cancel{color:#e53935;border-color:#e53935}
+.tp-edit-btn.save{background:#f5a623;color:#000;border-color:#f5a623}
+.tp-hero{display:flex;flex-direction:column;align-items:center;padding:24px 0 16px;text-align:center}
+.tp-avatar{width:76px;height:76px;background:#f5a623;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:24px;font-weight:800;color:#000;position:relative;overflow:hidden;cursor:pointer;margin-bottom:12px;border:3px solid #1c1c1c}
+.tp-avatar-overlay{position:absolute;inset:0;background:rgba(0,0,0,.5);display:flex;align-items:center;justify-content:center;font-size:20px}
+.tp-vname{font-size:18px;font-weight:800;margin:0 0 4px}
+.tp-tagline{font-size:12px;color:#555;margin:0 0 10px}
+.tp-verify-chips{display:flex;gap:6px;flex-wrap:wrap;justify-content:center;margin-bottom:10px}
+.tp-vchip{font-size:10px;font-weight:600;padding:4px 10px;border-radius:7px}
+.tp-vchip.verified{background:rgba(76,175,80,.1);color:#4caf50;border:1px solid rgba(76,175,80,.2)}
+.tp-live-badge{background:rgba(76,175,80,.1);border:1px solid rgba(76,175,80,.2);color:#4caf50;font-size:11px;font-weight:700;padding:6px 14px;border-radius:20px}
+.tp-sec{font-size:9px;color:#444;letter-spacing:1.2px;font-weight:700;text-transform:uppercase;margin:4px 0 8px}
+.tp-card{background:#111;border:1px solid #1c1c1c;border-radius:14px;padding:16px;margin-bottom:14px;display:flex;flex-direction:column;gap:14px}
+.tp-field{display:flex;flex-direction:column;gap:5px}
+.tp-field label{font-size:10px;color:#555;letter-spacing:.4px}
+.tp-fval{font-size:14px;color:#fff;font-weight:500;margin:0}
+.tp-field input,.tp-field select{background:#0a0a0a;border:1.5px solid #f5a623;border-radius:10px;padding:10px 12px;color:#fff;font-size:14px;outline:none;font-family:inherit;width:100%;box-sizing:border-box}
+.tp-toggle-row{display:flex;justify-content:space-between;align-items:center;gap:12px}
+.tp-toggle-label{font-size:13px;font-weight:700;color:#fff;margin:0 0 3px}
+.tp-toggle-sub{font-size:11px;color:#555;margin:0}
+.tp-toggle{width:44px;height:24px;background:#1a1a1a;border:1px solid #2a2a2a;border-radius:12px;position:relative;cursor:pointer;transition:background .25s;flex-shrink:0}
+.tp-toggle.on{background:#f5a623;border-color:#f5a623}
+.tp-toggle-k{position:absolute;top:3px;left:3px;width:16px;height:16px;background:#fff;border-radius:50%;transition:left .25s}
+.tp-toggle.on .tp-toggle-k{left:23px}
+.tp-cancel-sub{width:100%;background:none;border:1px solid #e53935;color:#e53935;padding:11px;border-radius:10px;font-size:13px;font-weight:600;cursor:pointer;font-family:inherit}
+.tp-renew-sub{width:100%;background:rgba(76,175,80,.1);border:1px solid #4caf50;color:#4caf50;padding:11px;border-radius:10px;font-size:13px;font-weight:700;cursor:pointer;font-family:inherit}
+.tp-signout{width:100%;background:none;border:1px solid #1c1c1c;color:#f5a623;padding:13px;border-radius:10px;font-size:14px;font-weight:600;cursor:pointer;margin:0 0 14px;font-family:inherit}

@@ -1,0 +1,23 @@
+.trf-notif-page   { display:flex; flex-direction:column; min-height:100vh; background:#0a0a0a; }
+.trf-notif-header { display:flex; justify-content:space-between; align-items:center; padding:14px 16px; background:#111; border-bottom:1px solid #1e1e1e; position:sticky; top:0; z-index:10; }
+.trf-notif-header-left { display:flex; align-items:center; gap:10px; }
+.trf-notif-header-left h2 { font-size:18px; font-weight:700; color:#fff; margin:0; }
+.trf-notif-back  { background:none; border:none; color:#aaa; font-size:20px; cursor:pointer; }
+.trf-notif-unread { font-size:11px; color:#f5a623; font-weight:600; display:block; }
+.trf-notif-mark-all { background:none; border:none; color:#f5a623; font-size:12px; font-weight:600; cursor:pointer; font-family:inherit; }
+.trf-notif-filters { display:flex; gap:7px; overflow-x:auto; padding:10px 16px; }
+.trf-notif-filters::-webkit-scrollbar { height:0; }
+.trf-notif-filter { background:#1a1a1a; border:1px solid #2a2a2a; color:#555; font-size:11px; font-weight:500; padding:7px 14px; border-radius:20px; cursor:pointer; white-space:nowrap; font-family:inherit; transition:all 0.2s; }
+.trf-notif-filter.active { background:#f5a623; color:#000; border-color:#f5a623; font-weight:700; }
+.trf-notif-list { padding:0 16px; display:flex; flex-direction:column; gap:8px; }
+.trf-notif-item { display:flex; gap:12px; align-items:flex-start; background:#1a1a1a; border:1px solid #2a2a2a; border-radius:14px; padding:14px; cursor:pointer; }
+.trf-notif-item.unread { border-color:#2e2e2e; }
+.trf-notif-icon-wrap { width:40px; height:40px; border-radius:12px; display:flex; align-items:center; justify-content:center; font-size:18px; flex-shrink:0; }
+.trf-notif-content { flex:1; min-width:0; }
+.trf-notif-title-row { display:flex; align-items:center; gap:7px; margin-bottom:4px; }
+.trf-notif-title { font-size:13px; font-weight:700; color:#fff; }
+.trf-notif-dot   { width:7px; height:7px; border-radius:50%; flex-shrink:0; }
+.trf-notif-body  { font-size:12px; color:#777; line-height:1.5; margin:0 0 4px; }
+.trf-notif-time  { font-size:10px; color:#444; }
+.trf-notif-del   { background:none; border:none; color:#333; font-size:13px; cursor:pointer; padding:0; flex-shrink:0; transition:color 0.2s; }
+.trf-notif-del:hover { color:#e05c5c; }

@@ -1,0 +1,35 @@
+.adm-notif-page { display:flex; flex-direction:column; min-height:100vh; background:#0a0a0a; }
+
+.adm-notif-header { display:flex; justify-content:space-between; align-items:center; padding:14px 16px; background:#111; border-bottom:1px solid #1e1e1e; position:sticky; top:0; z-index:10; }
+.adm-notif-header-left { display:flex; align-items:center; gap:10px; }
+.adm-notif-header-left h2 { font-size:18px; font-weight:700; color:#fff; }
+.adm-notif-back { background:none; border:none; color:#aaa; font-size:20px; cursor:pointer; }
+.adm-notif-unread-count { font-size:11px; color:#f5a623; font-weight:600; }
+.adm-notif-mark-all { background:none; border:none; color:#f5a623; font-size:12px; font-weight:600; cursor:pointer; }
+
+.adm-notif-filters { display:flex; gap:7px; overflow-x:auto; padding:12px 16px 8px; }
+.adm-notif-filters::-webkit-scrollbar { height:0; }
+.adm-notif-filter-btn { background:#1a1a1a; border:1px solid #2a2a2a; color:#666; font-size:11px; font-weight:500; padding:6px 14px; border-radius:20px; cursor:pointer; white-space:nowrap; transition:all 0.2s; }
+.adm-notif-filter-btn.active { background:#f5a623; color:#000; border-color:#f5a623; font-weight:700; }
+
+.adm-notif-list { padding:0 16px; display:flex; flex-direction:column; gap:8px; }
+
+.adm-notif-item { display:flex; gap:12px; align-items:flex-start; background:#1a1a1a; border:1px solid #2a2a2a; border-radius:14px; padding:14px; cursor:pointer; transition:border-color 0.2s; }
+.adm-notif-item.unread { border-color:#2e2e2e; background:#1e1e1e; }
+.adm-notif-item:hover { border-color:#3a3a3a; }
+
+.adm-notif-icon-wrap { width:40px; height:40px; border-radius:12px; display:flex; align-items:center; justify-content:center; font-size:18px; flex-shrink:0; }
+
+.adm-notif-content { flex:1; min-width:0; }
+.adm-notif-title-row { display:flex; align-items:center; gap:7px; margin-bottom:4px; }
+.adm-notif-title { font-size:13px; font-weight:700; color:#fff; }
+.adm-notif-dot   { width:7px; height:7px; border-radius:50%; flex-shrink:0; }
+.adm-notif-body  { font-size:12px; color:#888; line-height:1.5; margin-bottom:4px; }
+.adm-notif-time  { font-size:10px; color:#444; }
+
+.adm-notif-delete { background:none; border:none; color:#333; font-size:13px; cursor:pointer; padding:0 0 0 4px; flex-shrink:0; transition:color 0.2s; }
+.adm-notif-delete:hover { color:#e05c5c; }
+
+.adm-notif-empty { display:flex; flex-direction:column; align-items:center; gap:10px; padding:60px 0; color:#444; }
+.adm-notif-empty span { font-size:40px; }
+.adm-notif-empty p    { font-size:14px; }

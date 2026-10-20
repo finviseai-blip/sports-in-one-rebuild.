@@ -1,0 +1,134 @@
+.adm-bk-page   { display:flex; flex-direction:column; min-height:100vh; background:#0a0a0a; }
+.adm-bk-scroll { flex:1; overflow-y:auto; }
+
+/* ── Listing ── */
+.adm-bk-topbar { display:flex; justify-content:space-between; align-items:flex-start; padding:14px 16px 8px; }
+.adm-bk-title  { font-size:22px; font-weight:800; color:#fff; margin:0; }
+.adm-bk-subtitle { font-size:12px; color:#555; margin-top:3px; }
+.adm-bk-add-btn { background:#f5a623; color:#000; border:none; border-radius:12px; padding:10px 14px; font-size:12px; font-weight:700; cursor:pointer; white-space:nowrap; }
+
+/* Search */
+.adm-bk-search-wrap { display:flex; align-items:center; gap:10px; margin:0 16px 10px; background:#1a1a1a; border:1px solid #2a2a2a; border-radius:14px; padding:0 14px; }
+.adm-bk-search { flex:1; background:none; border:none; color:#fff; font-size:14px; padding:12px 0; outline:none; }
+.adm-bk-search::placeholder { color:#444; }
+
+/* Add form */
+.adm-bk-add-form { background:#141414; border:1px solid #f5a623; border-radius:16px; padding:16px; margin:0 16px 12px; display:flex; flex-direction:column; gap:10px; }
+.adm-bk-add-form-title { font-size:14px; font-weight:700; color:#f5a623; }
+.adm-bk-form-row { display:grid; grid-template-columns:1fr 1fr; gap:10px; }
+.adm-bk-form-field { display:flex; flex-direction:column; gap:5px; }
+.adm-bk-form-field label { font-size:10px; color:#555; letter-spacing:0.5px; text-transform:uppercase; font-weight:600; }
+.adm-bk-form-field input,
+.adm-bk-form-field select { background:#111; border:1px solid #2a2a2a; border-radius:10px; padding:9px 12px; color:#fff; font-size:13px; outline:none; font-family:inherit; width:100%; transition:border-color 0.2s; }
+.adm-bk-form-field input:focus { border-color:#f5a623; }
+.adm-bk-form-actions { display:flex; gap:10px; }
+.adm-bk-form-save   { flex:1; background:#f5a623; color:#000; border:none; border-radius:10px; padding:12px; font-size:13px; font-weight:700; cursor:pointer; }
+.adm-bk-form-cancel { flex:1; background:#111; color:#aaa; border:1px solid #2a2a2a; border-radius:10px; padding:12px; font-size:13px; cursor:pointer; }
+
+/* Sport filters */
+.adm-bk-sport-filters { display:flex; gap:8px; overflow-x:auto; padding:0 16px 8px; }
+.adm-bk-sport-filters::-webkit-scrollbar { height:0; }
+.adm-bk-sport-btn { background:#1a1a1a; border:1px solid #2a2a2a; color:#666; font-size:12px; font-weight:500; padding:8px 14px; border-radius:22px; cursor:pointer; white-space:nowrap; transition:all 0.2s; }
+.adm-bk-sport-btn.active { background:#f5a623; color:#000; border-color:#f5a623; font-weight:700; }
+
+/* Sort bar */
+.adm-bk-sort-bar { display:flex; align-items:center; gap:8px; padding:4px 16px 10px; }
+.adm-bk-sort-label { font-size:11px; color:#444; }
+.adm-bk-sort-btn   { background:none; border:1px solid #2a2a2a; color:#555; font-size:11px; padding:5px 12px; border-radius:16px; cursor:pointer; transition:all 0.2s; }
+.adm-bk-sort-btn.active { border-color:#f5a623; color:#f5a623; }
+
+/* Section heading */
+.adm-bk-section-heading { font-size:10px; color:#444; letter-spacing:1.5px; font-weight:700; padding:0 16px 8px; }
+
+/* Cards grid */
+.adm-bk-cards { display:flex; flex-direction:column; gap:10px; padding:0 16px; }
+
+/* Turf card */
+.adm-bk-card { background:#1a1a1a; border:1px solid #2a2a2a; border-radius:18px; overflow:hidden; cursor:pointer; transition:border-color 0.2s, transform 0.15s; }
+.adm-bk-card:hover:not(.unavail) { border-color:#f5a623; transform:translateY(-2px); }
+.adm-bk-card.unavail { opacity:0.55; cursor:not-allowed; }
+.adm-bk-card.owned   { border-color:rgba(245,166,35,0.35); }
+
+/* Banner */
+.adm-bk-card-banner { height:80px; background:linear-gradient(135deg,#1e1e1e,#2a2a2a); display:flex; align-items:center; justify-content:center; position:relative; }
+.adm-bk-card-emoji  { font-size:44px; }
+.adm-bk-card-mine-tag   { position:absolute; top:10px; left:10px; background:#f5a623; color:#000; font-size:9px; font-weight:800; padding:3px 8px; border-radius:6px; letter-spacing:0.8px; }
+.adm-bk-card-unavail-tag { position:absolute; top:10px; left:10px; background:#e05c5c; color:#fff; font-size:9px; font-weight:800; padding:3px 8px; border-radius:6px; }
+.adm-bk-card-dist-tag   { position:absolute; top:10px; right:10px; background:rgba(0,0,0,0.6); color:#ccc; font-size:10px; padding:3px 8px; border-radius:6px; }
+
+/* Card body */
+.adm-bk-card-body     { padding:14px; }
+.adm-bk-card-top-row  { display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:4px; }
+.adm-bk-card-name     { font-size:15px; font-weight:700; color:#fff; }
+.adm-bk-card-rating   { font-size:12px; font-weight:600; color:#f5a623; }
+.adm-bk-card-rating span { color:#666; font-weight:400; }
+.adm-bk-card-location { font-size:12px; color:#555; margin-bottom:8px; }
+
+.adm-bk-card-chips { display:flex; gap:5px; flex-wrap:wrap; margin-bottom:8px; }
+.adm-bk-card-chips span { background:#2a2a2a; color:#888; font-size:10px; font-weight:500; padding:3px 9px; border-radius:8px; }
+
+.adm-bk-card-amenities-row { display:flex; gap:5px; flex-wrap:wrap; margin-bottom:10px; }
+.adm-bk-card-amenity { font-size:10px; color:#666; background:#111; border:1px solid #2a2a2a; padding:3px 8px; border-radius:7px; }
+
+.adm-bk-card-footer { display:flex; justify-content:space-between; align-items:center; padding-top:10px; border-top:1px solid #2a2a2a; }
+.adm-bk-card-price-wrap { display:flex; align-items:baseline; gap:3px; }
+.adm-bk-card-price      { font-size:20px; font-weight:800; color:#f5a623; }
+.adm-bk-card-price-unit { font-size:12px; color:#555; }
+.adm-bk-card-slot-info  { display:flex; flex-direction:column; align-items:flex-end; gap:2px; }
+.adm-bk-avail-text  { font-size:11px; color:#4caf50; font-weight:600; }
+.adm-bk-unavail-text { font-size:11px; color:#e05c5c; font-weight:600; }
+.adm-bk-book-arrow  { font-size:12px; color:#f5a623; font-weight:700; }
+
+/* ── Detail view ── */
+.adm-bk-hero { height:160px; background:linear-gradient(135deg,#1e1e1e,#2a2a2a); display:flex; align-items:center; justify-content:center; position:relative; }
+.adm-bk-hero-emoji   { font-size:72px; }
+.adm-bk-owned-ribbon { position:absolute; top:14px; left:0; background:#f5a623; color:#000; font-size:10px; font-weight:800; padding:5px 14px 5px 12px; letter-spacing:0.8px; border-radius:0 8px 8px 0; }
+
+.adm-bk-detail-body { padding:16px; display:flex; flex-direction:column; gap:12px; }
+.adm-bk-back-btn    { background:#1a1a1a; border:1px solid #2a2a2a; color:#aaa; font-size:12px; padding:8px 14px; border-radius:10px; cursor:pointer; align-self:flex-start; transition:border-color 0.2s; }
+.adm-bk-back-btn:hover { border-color:#f5a623; color:#f5a623; }
+
+.adm-bk-detail-name-row { display:flex; justify-content:space-between; align-items:center; }
+.adm-bk-detail-name { font-size:20px; font-weight:800; color:#fff; margin:0; }
+.adm-bk-rating-pill  { background:rgba(245,166,35,0.12); border:1px solid rgba(245,166,35,0.3); color:#f5a623; font-size:13px; font-weight:700; padding:6px 12px; border-radius:10px; }
+
+.adm-bk-detail-meta { display:flex; align-items:center; gap:6px; font-size:12px; color:#666; flex-wrap:wrap; }
+
+.adm-bk-chips-row { display:flex; gap:7px; flex-wrap:wrap; }
+.adm-bk-chip      { background:#2a2a2a; color:#888; font-size:11px; padding:5px 12px; border-radius:9px; }
+
+.adm-bk-section-label { font-size:10px; color:#444; letter-spacing:1.5px; font-weight:700; }
+
+.adm-bk-amenities-grid { display:flex; flex-wrap:wrap; gap:7px; }
+.adm-bk-amenity { background:#1e1e1e; border:1px solid #2a2a2a; color:#888; font-size:12px; padding:7px 12px; border-radius:10px; }
+
+.adm-bk-price-row { display:flex; justify-content:space-between; align-items:center; }
+.adm-bk-price      { font-size:28px; font-weight:800; color:#f5a623; }
+.adm-bk-price-unit { font-size:13px; color:#666; }
+.adm-bk-duration-pills { display:flex; gap:7px; }
+.adm-bk-dur-btn { background:#1a1a1a; border:1px solid #2a2a2a; color:#666; font-size:12px; font-weight:600; padding:8px 14px; border-radius:10px; cursor:pointer; transition:all 0.15s; }
+.adm-bk-dur-btn.active { background:#f5a623; color:#000; border-color:#f5a623; }
+
+.adm-bk-date-input { background:#1a1a1a; border:1px solid #2a2a2a; border-radius:12px; padding:12px 16px; color:#fff; font-size:14px; outline:none; width:100%; box-sizing:border-box; transition:border-color 0.2s; }
+.adm-bk-date-input:focus { border-color:#f5a623; }
+
+.adm-bk-slots-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:8px; }
+.adm-bk-slot { background:#1a1a1a; border:1px solid #2a2a2a; color:#888; font-size:12px; font-weight:600; padding:11px 6px; border-radius:12px; cursor:pointer; transition:all 0.15s; text-align:center; position:relative; display:flex; flex-direction:column; align-items:center; gap:2px; }
+.adm-bk-slot.selected { background:#f5a623; color:#000; border-color:#f5a623; }
+.adm-bk-slot.booked   { background:#111; color:#333; cursor:not-allowed; border-color:#1e1e1e; }
+.adm-bk-slot-booked   { font-size:9px; color:#e05c5c; }
+
+.adm-bk-total-card { background:#141414; border:1px solid #2a2a2a; border-radius:14px; padding:14px; display:flex; flex-direction:column; gap:8px; }
+.adm-bk-total-row   { display:flex; justify-content:space-between; font-size:13px; color:#888; }
+.adm-bk-total-divider { height:1px; background:#2a2a2a; }
+.adm-bk-grand-total { color:#fff; font-weight:700; font-size:14px; }
+.adm-bk-total-price { color:#f5a623; font-size:18px; font-weight:800; }
+
+.adm-bk-confirm-btn { width:100%; background:#f5a623; color:#000; border:none; border-radius:16px; padding:18px; font-size:15px; font-weight:800; cursor:pointer; transition:all 0.2s; }
+.adm-bk-confirm-btn.done     { background:#4caf50; }
+.adm-bk-confirm-btn.disabled { opacity:0.4; cursor:not-allowed; }
+
+/* Custom duration */
+.adm-bk-custom-dur { display:flex; align-items:center; gap:8px; margin-top:10px; }
+.adm-bk-custom-dur-inp { background:#0a0a0a; border:1.5px solid #f5a623; border-radius:10px; padding:10px 14px; color:#fff; font-size:15px; font-weight:700; width:100px; outline:none; font-family:inherit; }
+.adm-bk-custom-dur > span { font-size:13px; color:#888; }

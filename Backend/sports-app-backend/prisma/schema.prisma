@@ -1,0 +1,135 @@
+// This is your Prisma schema file
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model User {
+  id        String    @id @default(uuid())
+  name      String
+  email     String    @unique
+  phone     String?
+  dob       DateTime?
+  password  String
+  role      Role      @default(STUDENT)
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+
+  // Relationships
+  coachStudents   CoachStudent[] @relation("CoachStudents")
+  studentsOfCoach CoachStudent[] @relation("StudentCoaches")
+
+  performances Performance[]
+  eventInvites EventInvite[]
+  bookings     Booking[]
+  turfs        Turf[]        @relation("TurfOwner")
+  events       Event[]       @relation("CoachEvents")
+}
+
+enum Role {
+  STUDENT
+  COACH
+  TURF_OWNER
+  ADMIN
+}
+
+model CoachStudent {
+  id        String   @id @default(uuid())
+  coachId   String
+  studentId String
+  createdAt DateTime @default(now())
+
+  coach   User @relation("StudentCoaches", fields: [coachId], references: [id], onDelete: Cascade)
+  student User @relation("CoachStudents", fields: [studentId], references: [id], onDelete: Cascade)
+
+  @@unique([coachId, studentId])
+}
+
+model Performance {
+  id        String   @id @default(uuid())
+  studentId String
+  coachId   String
+  metrics   Json // e.g. { "speed": 8, "stamina": 7, "notes": "Improving" }
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  student User @relation(fields: [studentId], references: [id], onDelete: Cascade)
+}
+
+model Event {
+  id          String   @id @default(uuid())
+  title       String
+  description String?
+  date        DateTime
+  coachId     String
+  createdAt   DateTime @default(now())
+
+  coach   User          @relation("CoachEvents", fields: [coachId], references: [id], onDelete: Cascade)
+  invites EventInvite[]
+}
+
+model EventInvite {
+  id        String       @id @default(uuid())
+  eventId   String
+  studentId String
+  status    InviteStatus @default(PENDING)
+  createdAt DateTime     @default(now())
+
+  event   Event @relation(fields: [eventId], references: [id], onDelete: Cascade)
+  student User  @relation(fields: [studentId], references: [id], onDelete: Cascade)
+}
+
+enum InviteStatus {
+  PENDING
+  ACCEPTED
+  DECLINED
+}
+
+model Turf {
+  id           String   @id @default(uuid())
+  name         String
+  location     String
+  pricePerHour Float
+  ownerId      String
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  owner    User       @relation("TurfOwner", fields: [ownerId], references: [id])
+  slots    TurfSlot[]
+  bookings Booking[]
+}
+
+model TurfSlot {
+  id        String   @id @default(uuid())
+  turfId    String
+  startTime DateTime
+  endTime   DateTime
+  isBooked  Boolean  @default(false)
+  createdAt DateTime @default(now())
+
+  turf    Turf     @relation(fields: [turfId], references: [id], onDelete: Cascade)
+  booking Booking?
+}
+
+model Booking {
+  id        String        @id @default(uuid())
+  turfId    String
+  slotId    String        @unique
+  studentId String
+  status    BookingStatus @default(CONFIRMED)
+  createdAt DateTime      @default(now())
+
+  turf    Turf     @relation(fields: [turfId], references: [id], onDelete: Cascade)
+  slot    TurfSlot @relation(fields: [slotId], references: [id], onDelete: Cascade)
+  student User     @relation(fields: [studentId], references: [id], onDelete: Cascade)
+}
+
+enum BookingStatus {
+  CONFIRMED
+  CANCELLED
+}

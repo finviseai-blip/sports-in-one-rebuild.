@@ -1,0 +1,102 @@
+:root {
+  --bg-primary: #050505;
+  --bg-secondary: #0c0c0c;
+  --bg-card: rgba(22, 22, 22, 0.7);
+  --bg-card-solid: #161616;
+  --accent: #f5a623;
+  --accent-glow: rgba(245, 166, 35, 0.4);
+  --accent-dim: rgba(245, 166, 35, 0.12);
+  --text-primary: #ffffff;
+  --text-secondary: #a0a0a0;
+  --text-muted: #555555;
+  --border: #222222;
+  --border-light: #333333;
+  --success: #4caf50;
+  --danger: #e53935;
+  --radius: 16px;
+  --radius-sm: 10px;
+  --glass: blur(12px) saturate(180%);
+  --shadow-premium: 0 8px 32px 0 rgba(0, 0, 0, 0.8);
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  -webkit-tap-highlight-color: transparent;
+}
+
+body {
+  font-family: 'Outfit', 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+#root {
+  width: 100%;
+  max-width: 430px;
+  min-height: 100vh;
+  background: var(--bg-primary);
+  position: relative;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Premium Utilities */
+.glass {
+  background: var(--bg-card);
+  backdrop-filter: var(--glass);
+  -webkit-backdrop-filter: var(--glass);
+  border: 1px solid var(--border);
+}
+
+.glow {
+  box-shadow: 0 0 20px var(--accent-glow);
+}
+
+.gradient-text {
+  background: linear-gradient(135deg, #fff 0%, #aaa 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.accent-gradient-text {
+  background: linear-gradient(135deg, var(--accent) 0%, #ffc107 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+button {
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  font-family: inherit;
+}
+
+button:active {
+  transform: scale(0.96);
+}
+
+input {
+  outline: none;
+  font-family: inherit;
+}
+
+/* Animations */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes pulse-glow {
+  0% { box-shadow: 0 0 5px var(--accent-glow); }
+  50% { box-shadow: 0 0 25px var(--accent-glow); }
+  100% { box-shadow: 0 0 5px var(--accent-glow); }
+}
+
+.animate-fade {
+  animation: fadeIn 0.4s ease-out forwards;
+}

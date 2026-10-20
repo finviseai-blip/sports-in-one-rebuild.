@@ -1,0 +1,60 @@
+name: One-time Sports-in-One source restoration
+
+on:
+  push:
+    branches:
+      - feature/restore-app-and-hardening
+    paths:
+      - scripts/restore-upstream.sh
+      - .github/workflows/restore-upstream.yml
+
+permissions:
+  contents: write
+
+jobs:
+  restore-source:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out the private rebuild branch
+        uses: actions/checkout@v4
+        with:
+          ref: feature/restore-app-and-hardening
+          fetch-depth: 0
+
+      - name: Skip if source restoration already ran
+        id: guard
+        shell: bash
+        run: |
+          if [[ -f .sports-in-one-source-imported ]]; then
+            echo "skip=true" >> "$GITHUB_OUTPUT"
+            echo "Source restoration marker exists; nothing to import."
+          else
+            echo "skip=false" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Check out the public source baseline
+        if: steps.guard.outputs.skip != 'true'
+        uses: actions/checkout@v4
+        with:
+          repository: SRchaudhari15/Sports-in-One
+          ref: main
+          path: upstream
+          persist-credentials: false
+
+      - name: Restore application and apply initial hardening
+        if: steps.guard.outputs.skip != 'true'
+        run: bash scripts/restore-upstream.sh
+
+      - name: Commit restored application to the feature branch
+        if: steps.guard.outputs.skip != 'true'
+        shell: bash
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A
+          if git diff --cached --quiet; then
+            echo "No changes to commit."
+            exit 0
+          fi
+          git commit -m "Restore Sports-in-One source and apply initial hardening"
+          git push origin HEAD:feature/restore-app-and-hardening

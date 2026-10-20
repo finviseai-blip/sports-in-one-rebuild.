@@ -1,0 +1,33 @@
+# Dependencies and generated builds
+node_modules/
+**/node_modules/
+dist/
+**/dist/
+build/
+**/build/
+
+# Environment files / secrets
+.env
+.env.*
+!.env.example
+**/.env
+**/.env.*
+!**/.env.example
+*.pem
+*.key
+
+# Local databases, PostgreSQL data and logs
+**/.pgdata/
+**/.pgdata/**
+*.log
+**/*.log
+*.sqlite
+*.db
+
+# Tooling and OS
+.cache/
+.eslintcache
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
