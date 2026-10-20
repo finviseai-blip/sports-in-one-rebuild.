@@ -1,45 +1,49 @@
 const prisma = require('../config/prisma');
 
 exports.createTurf = async (req, res) => {
-  const { name, location, pricePerHour, ownerId } = req.body;
+  const { name, location, pricePerHour } = req.body || {};
+  const numericPrice = Number(pricePerHour);
+  if (typeof name !== 'string' || !name.trim() ||
+      typeof location !== 'string' || !location.trim() ||
+      !Number.isFinite(numericPrice) || numericPrice <= 0) {
+    return res.status(400).json({ error: 'Name, location, and a positive hourly price are required' });
+  }
+
+  const ownerId = req.user.role === 'ADMIN' && typeof req.body.ownerId === 'string'
+    ? req.body.ownerId
+    : req.user.userId;
+
   try {
     const turf = await prisma.turf.create({
-      data: { name, location, pricePerHour, ownerId }
+      data: { name: name.trim(), location: location.trim(), pricePerHour: numericPrice, ownerId }
     });
 
-    // Automatically generate 6AM-10PM slots for the next 7 days
+    // Make future hourly slots visible to users; bookings still validate freshness and ownership.
     const slots = [];
     const today = new Date();
-
     for (let dayOffset = 0; dayOffset < 7; dayOffset++) {
       for (let hour = 6; hour < 22; hour++) {
         const slotStart = new Date(today);
         slotStart.setDate(today.getDate() + dayOffset);
         slotStart.setHours(hour, 0, 0, 0);
-
+        if (slotStart <= today) continue;
         const slotEnd = new Date(slotStart);
         slotEnd.setHours(hour + 1, 0, 0, 0);
-
-        slots.push({
-          turfId: turf.id,
-          startTime: slotStart,
-          endTime: slotEnd,
-          isBooked: false
-        });
+        slots.push({ turfId: turf.id, startTime: slotStart, endTime: slotEnd, isBooked: false });
       }
     }
 
-    await prisma.turfSlot.createMany({
-      data: slots
-    });
-
-    res.status(201).json({ message: 'Turf and 112 slots (7 days) created successfully', turf });
+    if (slots.length) {
+      await prisma.turfSlot.createMany({ data: slots });
+    }
+    return res.status(201).json({ message: 'Turf created successfully', turf, generatedSlots: slots.length });
   } catch (error) {
-    res.status(500).json({ error: error.message });
+    console.error('Create turf failed:', error.message);
+    return res.status(500).json({ error: 'Unable to create turf' });
   }
 };
 
-exports.getAllTurfs = async (req, res) => {
+exports.getAllTurfs = async (_req, res) => {
   try {
     const turfs = await prisma.turf.findMany({
       include: {
@@ -49,9 +53,10 @@ exports.getAllTurfs = async (req, res) => {
         }
       }
     });
-    res.status(200).json({ turfs });
+    return res.status(200).json({ turfs });
   } catch (error) {
-    res.status(500).json({ error: error.message });
+    console.error('Get turfs failed:', error.message);
+    return res.status(500).json({ error: 'Unable to load turfs' });
   }
 };
 
@@ -66,11 +71,10 @@ exports.getTurfById = async (req, res) => {
         }
       }
     });
-
     if (!turf) return res.status(404).json({ error: 'Turf not found' });
-
-    res.status(200).json({ turf });
+    return res.status(200).json({ turf });
   } catch (error) {
-    res.status(500).json({ error: error.message });
+    console.error('Get turf failed:', error.message);
+    return res.status(500).json({ error: 'Unable to load turf' });
   }
 };
