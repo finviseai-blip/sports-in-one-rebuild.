@@ -5,12 +5,6 @@ function canAccessStudent(req, studentId) {
   return req.user.role !== 'STUDENT' || req.user.userId === studentId;
 }
 
-function publicStudent(user) {
-  if (!user) return null;
-  const { password: _password, ...safeUser } = user;
-  return safeUser;
-}
-
 exports.getAllStudents = async (_req, res) => {
   try {
     const students = await prisma.user.findMany({
