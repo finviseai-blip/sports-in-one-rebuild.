@@ -23,8 +23,8 @@ exports.register = async (req, res) => {
       return res.status(400).json({ message: 'Valid name and email plus a password of at least 8 characters are required' });
     }
     const normalizedEmail = email.trim().toLowerCase();
-    if (String(role || '').toUpperCase() === 'ADMIN') {
-      return res.status(403).json({ message: 'Admin accounts must be provisioned by an operator' });
+    if (role && String(role).toUpperCase() !== 'STUDENT') {
+      return res.status(403).json({ message: 'This registration endpoint creates student accounts only' });
     }
 
     // Check if user exists
@@ -39,11 +39,7 @@ exports.register = async (req, res) => {
     // Hash password
     const hashedPassword = await bcrypt.hash(password, 10);
 
-    const validRoles = ['STUDENT', 'COACH', 'TURF_OWNER', 'ADMIN'];
-    let userRole = (role || 'STUDENT').toString().toUpperCase();
-    if (!validRoles.includes(userRole)) {
-      userRole = 'STUDENT';
-    }
+    const userRole = 'STUDENT';
 
     const parsedDob = dob && !isNaN(new Date(dob).getTime()) ? new Date(dob) : null;
 
