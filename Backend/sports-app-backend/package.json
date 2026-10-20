@@ -5,7 +5,9 @@
   "scripts": {
     "dev": "nodemon server.js",
     "start": "node server.js",
-    "check": "node --check server.js && node --check src/controllers/authController.js && node --check src/controllers/bookingController.js && node --check src/controllers/coachController.js && node --check src/controllers/eventController.js && node --check src/controllers/studentController.js && node --check src/controllers/turfController.js"
+    "check": "node --check server.js && node --check src/controllers/authController.js && node --check src/controllers/bookingController.js && node --check src/controllers/coachController.js && node --check src/controllers/eventController.js && node --check src/controllers/studentController.js && node --check src/controllers/turfController.js",
+    "test": "node --test",
+    "create-admin": "node scripts/create-admin.js"
   },
   "keywords": [],
   "author": "",
