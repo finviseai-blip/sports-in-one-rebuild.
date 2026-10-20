@@ -72,6 +72,20 @@ exports.getAllBookings = async (req, res) => {
   }
 };
 
+exports.getMyBookings = async (req, res) => {
+  try {
+    const bookings = await prisma.booking.findMany({
+      where: { studentId: req.user.userId },
+      include: safeBookingInclude,
+      orderBy: { createdAt: 'desc' }
+    });
+    return res.status(200).json({ bookings });
+  } catch (error) {
+    console.error('Get my bookings failed:', error.message);
+    return res.status(500).json({ error: 'Unable to load your bookings' });
+  }
+};
+
 exports.getBookingById = async (req, res) => {
   try {
     const booking = await prisma.booking.findUnique({
