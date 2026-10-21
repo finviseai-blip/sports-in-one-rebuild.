@@ -82,6 +82,9 @@ model EventInvite {
 
   event   Event @relation(fields: [eventId], references: [id], onDelete: Cascade)
   student User  @relation(fields: [studentId], references: [id], onDelete: Cascade)
+
+  @@unique([eventId, studentId])
+  @@index([studentId, status])
 }
 
 enum InviteStatus {
