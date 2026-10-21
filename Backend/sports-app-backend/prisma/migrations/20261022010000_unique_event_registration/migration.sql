@@ -20,3 +20,9 @@ ON "EventInvite"("eventId", "studentId");
 
 CREATE INDEX "EventInvite_studentId_status_idx"
 ON "EventInvite"("studentId", "status");
+
+-- Keep cancelled bookings as history while allowing a released slot to be booked again.
+DROP INDEX IF EXISTS "Booking_slotId_key";
+CREATE UNIQUE INDEX "Booking_slotId_active_key"
+ON "Booking"("slotId")
+WHERE "status" = 'CONFIRMED';
