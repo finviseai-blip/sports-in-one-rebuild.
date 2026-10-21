@@ -74,8 +74,6 @@ export default function StudentEvents() {
   )
 
   const filtered = useMemo(() => events.filter((event) => {
-    if (filterTab === 'Free') return true
-    if (filterTab === 'Paid') return false
     if (filterTab === 'Joined') return event.joined
     return true
   }), [events, filterTab])
@@ -171,7 +169,7 @@ export default function StudentEvents() {
           <>
             <p className="se-sub-title">Upcoming academy events & tournaments</p>
             <div className="se-filter-tabs">
-              {['All Events', 'Free', 'Paid', 'Joined'].map((filter) => (
+              {['All Events', 'Joined'].map((filter) => (
                 <button key={filter} className={filterTab === filter ? 'active' : ''} onClick={() => setFilterTab(filter)}>{filter}</button>
               ))}
             </div>
