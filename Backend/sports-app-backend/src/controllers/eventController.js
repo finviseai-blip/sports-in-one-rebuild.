@@ -130,6 +130,44 @@ exports.updateRegistrationStatus = async (req, res) => {
   }
 };
 
+exports.createInvitation = async (req, res) => {
+  const { studentId } = req.body || {};
+  if (typeof studentId !== 'string' || !studentId.trim()) {
+    return res.status(400).json({ error: 'A student ID is required' });
+  }
+
+  try {
+    const event = await prisma.event.findUnique({
+      where: { id: req.params.id },
+      select: { id: true, coachId: true, date: true }
+    });
+    if (!event) return res.status(404).json({ error: 'Event not found' });
+    if (event.date <= new Date()) {
+      return res.status(400).json({ error: 'Invitations cannot be sent for an event that has started or ended' });
+    }
+    if (req.user.role === 'COACH' && event.coachId !== req.user.userId) {
+      return res.status(403).json({ error: 'You can only invite students to your own events' });
+    }
+
+    const student = await prisma.user.findFirst({
+      where: { id: studentId, role: 'STUDENT' },
+      select: { id: true }
+    });
+    if (!student) return res.status(404).json({ error: 'Student not found' });
+
+    const invitation = await prisma.eventInvite.upsert({
+      where: { eventId_studentId: { eventId: event.id, studentId: student.id } },
+      create: { eventId: event.id, studentId: student.id, status: 'PENDING' },
+      update: { status: 'PENDING' },
+      include: { event: { include: eventInclude } }
+    });
+    return res.status(201).json({ message: 'Invitation saved', invitation });
+  } catch (error) {
+    console.error('Create event invitation failed:', error.message);
+    return res.status(500).json({ error: 'Unable to create invitation' });
+  }
+};
+
 exports.createEvent = async (req, res) => {
   try {
     const { title, description, date, coachId } = req.body || {};
