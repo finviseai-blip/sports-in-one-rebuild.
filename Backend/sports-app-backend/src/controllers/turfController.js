@@ -66,7 +66,7 @@ exports.getTurfById = async (req, res) => {
       where: { id: req.params.id },
       include: {
         slots: {
-          where: { startTime: { gte: new Date() } },
+          where: { startTime: { gte: new Date() }, isBooked: false, isBlocked: false },
           orderBy: { startTime: 'asc' }
         }
       }
