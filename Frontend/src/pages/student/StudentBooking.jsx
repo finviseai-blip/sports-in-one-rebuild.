@@ -12,12 +12,6 @@ const sports = [
   { name: 'Tennis', icon: '🎾' },
   { name: 'Swimming', icon: '🏊' },
 ]
-const teamSizes = ['1v1', '5v5', '7v7', '11v11']
-const amenityIcons = {
-  Floodlights: '💡', Parking: '🅿️', 'Changing Room': '🚿',
-  Canteen: '🍽️', 'Drinking Water': '💧', 'First Aid': '🩺',
-  'AC Indoor': '❄️', Lockers: '🔒', Coaching: '🎓',
-}
 const dateKey = (value) => {
   const date = new Date(value)
   if (Number.isNaN(date.getTime())) return ''
