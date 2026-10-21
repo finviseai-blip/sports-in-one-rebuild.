@@ -53,7 +53,7 @@ exports.getStudentById = async (req, res) => {
 exports.getStudentAnalytics = async (req, res) => {
   try {
     const { id } = req.params;
-    if (!canAccessStudent(req, id)) {
+    if (!(await canAccessStudent(req, id))) {
       return res.status(403).json({ error: 'You can only access your own analytics' });
     }
 
