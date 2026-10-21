@@ -17,6 +17,7 @@ exports.createBooking = async (req, res) => {
   try {
     const slot = await prisma.turfSlot.findUnique({ where: { id: slotId } });
     if (!slot) return res.status(404).json({ error: 'Slot not found' });
+    if (slot.isBlocked) return res.status(409).json({ error: 'This slot is blocked by the turf owner' });
     if (slot.turfId !== turfId) {
       return res.status(400).json({ error: 'The selected slot does not belong to this turf' });
     }
@@ -26,7 +27,7 @@ exports.createBooking = async (req, res) => {
 
     const booking = await prisma.$transaction(async (tx) => {
       const claimed = await tx.turfSlot.updateMany({
-        where: { id: slotId, turfId, isBooked: false, startTime: { gt: new Date() } },
+        where: { id: slotId, turfId, isBooked: false, isBlocked: false, startTime: { gt: new Date() } },
         data: { isBooked: true }
       });
       if (claimed.count !== 1) {
