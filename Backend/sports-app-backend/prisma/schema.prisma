@@ -116,7 +116,7 @@ model TurfSlot {
   createdAt DateTime @default(now())
 
   turf    Turf     @relation(fields: [turfId], references: [id], onDelete: Cascade)
-  booking Booking?
+  bookings Booking[]
 }
 
 model Booking {
