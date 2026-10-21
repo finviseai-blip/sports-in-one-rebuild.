@@ -1,47 +1,67 @@
 # Sports-in-One — Rebuild
 
-Sports-in-One is a sports academy and turf-booking platform. This private repository is the active rebuild target, restored from the original application source with initial configuration and security hardening.
+Sports-in-One is a sports academy, event-registration, and turf-booking platform. This repository is the active rebuild target.
 
-## Application surfaces
+## Application layout
 
 - `Frontend/` — primary React + Vite frontend for student, admin, and turf-owner flows.
 - `Backend/sports-app-backend/` — Express REST API, Prisma ORM, and PostgreSQL.
-- `Backend/academypro/` — second React/Vite app that overlaps with the primary frontend. Treat it as a legacy/reference surface until a single deployable frontend is selected.
+- `Backend/academypro/` — a second React/Vite app that overlaps with the primary frontend. Treat it as legacy/reference code until the product is consolidated around one frontend.
 
-## Run locally
+## Local development
 
 Requirements: Node.js 20+ (Node 22 recommended), npm, PostgreSQL 15+.
 
-### Backend
+### Backend API
+
 ```bash
 cd Backend/sports-app-backend
 cp .env.example .env
-# Set DATABASE_URL and a unique JWT_SECRET (32+ characters) in .env
+# Set DATABASE_URL, JWT_SECRET (32+ characters), and CORS_ORIGIN in .env
 npm install
 npx prisma generate
-npx prisma db push
+npx prisma migrate deploy
 npm run dev
 ```
 
-To provision the first administrator after PostgreSQL is configured, set `ADMIN_NAME`, `ADMIN_EMAIL`, and `ADMIN_PASSWORD` (at least 16 characters) in your environment and run `npm run create-admin`. Public registration only creates student accounts; privileged roles must be provisioned by an authorized operator.
+For a **new, empty database**, `prisma migrate deploy` applies the checked-in migrations. If the database was previously created with `prisma db push`, do not apply the initial migration blindly: back up the database, verify schema compatibility, and follow the baselining instructions in the backend README.
+
+To provision the first administrator, set `ADMIN_NAME`, `ADMIN_EMAIL`, and `ADMIN_PASSWORD` (at least 16 characters) in the environment and run `npm run create-admin`. Public signup creates student accounts only; privileged roles must be provisioned by an authorized operator.
 
 ### Frontend
+
 ```bash
 cd Frontend
 npm install
-# Optional .env.local: VITE_API_BASE_URL=http://localhost:5000/api
+# Optional .env.local:
+# VITE_API_BASE_URL=http://localhost:5000/api
 npm run dev
 ```
 
-Backend environment variables: `NODE_ENV`, `PORT`, `DATABASE_URL`, `JWT_SECRET`, and `CORS_ORIGIN`. The frontend supports `VITE_API_BASE_URL`. Never commit `.env`, production credentials, private data, or database dumps.
+## Implemented and CI-validated
 
-## Verified gaps to close before production
+- Automated CI checks for frontend lint/build and backend syntax/tests.
+- Prisma schema validation/client generation and migration checks against a clean PostgreSQL service in CI.
+- JWT authentication and role/ownership checks for protected backend flows.
+- Student event registration/listing and turf availability, booking history, booking creation, and cancellation APIs.
+- Transactional slot claiming to reduce double-booking races; turf owners can manage future unbooked slots.
+- Health/readiness endpoint, CORS allowlist configuration, request-size limit, and safe public user responses.
+- Admin provisioning script that does not expose the configured password.
 
-1. Add JWT verification and role/ownership enforcement to every protected API route. Public signup must never permit self-assignment of `ADMIN`.
-2. Reconcile `prisma/schema.prisma` and legacy `src/prisma/schema.prisma`, then create/test migrations.
-3. Make turf booking atomic, verify the selected slot belongs to the selected turf, and derive the student identity from the authenticated session.
-4. Replace dashboard mock metrics and demo actions with persistent data and tested APIs.
-5. Consolidate duplicate frontends and test student, coach, admin, and turf-owner workflows end-to-end.
-6. Configure managed PostgreSQL, production secrets, strict CORS, backups, monitoring, and production frontend/API URLs.
+See `.github/workflows/validate.yml` for the automated checks. Passing CI is useful evidence, but it is not a substitute for production smoke tests or full browser-based end-to-end coverage.
 
-A successful build alone does not mean that authentication, bookings, or dashboards are production-ready.
+## Known gaps before production
+
+1. Create and configure the production hosting resources: managed PostgreSQL, a Node.js API host, and the Vite frontend host.
+2. Set production-only environment variables in each provider dashboard; never commit secrets or paste them into source control.
+3. Point the frontend's `VITE_API_BASE_URL` at the deployed API and configure the API's `CORS_ORIGIN` to the exact frontend origin.
+4. Run end-to-end checks for student, coach, admin, and turf-owner journeys against a staging database.
+5. Review remaining dashboard screens and actions for mock/local state, then connect them to persistent APIs where needed.
+6. Consolidate the duplicate frontend apps and document a single canonical build/deploy path.
+7. Configure backups, logs/alerts, dependency updates, and an incident/recovery procedure.
+
+## Important limitations
+
+- Paid event registration is not enabled; do not represent an event registration or turf booking as paid without a verified payment-provider integration.
+- A production deployment has not yet been confirmed. Do not share the app as production-ready until the API and database are deployed and the critical flows are tested against them.
+- Never commit `.env` files, production credentials, private user data, or database dumps.
