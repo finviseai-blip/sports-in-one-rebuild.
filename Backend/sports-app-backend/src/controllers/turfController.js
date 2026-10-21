@@ -48,7 +48,7 @@ exports.getAllTurfs = async (_req, res) => {
     const turfs = await prisma.turf.findMany({
       include: {
         slots: {
-          where: { isBooked: false, startTime: { gte: new Date() } },
+          where: { isBooked: false, isBlocked: false, startTime: { gte: new Date() } },
           orderBy: { startTime: 'asc' }
         }
       }
@@ -150,7 +150,7 @@ exports.setSlotBlocked = async (req, res) => {
     if (slot.isBooked) return res.status(409).json({ error: 'A booked slot cannot be blocked or reopened' });
     const updated = await prisma.turfSlot.updateMany({
       where: { id: slot.id, turfId: turf.id, isBooked: false, startTime: { gt: new Date() } },
-      data: { isBooked: blocked }
+      data: { isBlocked: blocked }
     });
     if (updated.count !== 1) return res.status(409).json({ error: 'Slot changed concurrently; refresh and retry' });
     return res.status(200).json({ message: blocked ? 'Slot blocked' : 'Slot reopened' });
