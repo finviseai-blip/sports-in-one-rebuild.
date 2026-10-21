@@ -113,6 +113,7 @@ model TurfSlot {
   startTime DateTime
   endTime   DateTime
   isBooked  Boolean  @default(false)
+  isBlocked Boolean  @default(false)
   createdAt DateTime @default(now())
 
   turf    Turf     @relation(fields: [turfId], references: [id], onDelete: Cascade)
