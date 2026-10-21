@@ -75,7 +75,7 @@ exports.registerForEvent = async (req, res) => {
         where: { eventId, studentId }
       });
       if (existing) {
-        if (existing.status === 'DECLINED') {
+        if (existing.status !== 'ACCEPTED') {
           return tx.eventInvite.update({
             where: { id: existing.id },
             data: { status: 'ACCEPTED' },
