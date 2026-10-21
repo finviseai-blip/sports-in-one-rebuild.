@@ -1,353 +1,249 @@
-import { useState } from 'react'
+import { useCallback, useEffect, useMemo, useState } from 'react'
 import Header from '../../components/Header'
 import BottomNav from '../../components/BottomNav'
+import API from '../../api/api'
 import './StudentEvents.css'
 
-const allEvents = [
-  {
-    id: 1,
-    name: 'City League U-17 Championship',
-    type: 'Football',
-    date: 'Mar 15, 2026 · 10:00 AM',
-    venue: 'Rajiv Gandhi Stadium, Mumbai',
-    team: '11 - 6 spots left',
-    fee: 500,
-    joined: false,
-    desc: 'Annual city-level U-17 football championship. Top teams from Mumbai compete for the trophy.',
-  },
-  {
-    id: 2,
-    name: 'Inter-Academy Friendly',
-    type: 'Football',
-    date: 'Mar 22, 2026 · 4:00 PM',
-    venue: 'AcademyPro Ground, Pune',
-    team: '7',
-    fee: 0,
-    joined: true,
-    desc: 'Friendly match between top academies. Great exposure for young players.',
-  },
-  {
-    id: 3,
-    name: 'District Selection Trial',
-    type: 'Football',
-    date: 'Apr 6, 2026 · 9:00 AM',
-    venue: 'Sports Complex, Thane',
-    team: '11',
-    fee: 0,
-    joined: false,
-    desc: 'District-level selection trial for state team. Top performers will be selected.',
-  },
-]
+function formatDate(value) {
+  if (!value) return 'Date to be announced'
+  const date = new Date(value)
+  if (Number.isNaN(date.getTime())) return 'Date to be announced'
+  return date.toLocaleString(undefined, {
+    dateStyle: 'medium',
+    timeStyle: 'short',
+  })
+}
 
-const QRCode = () => (
-  <div style={{
-    width: 140, height: 140,
-    background: '#fff',
-    padding: 10, borderRadius: 10,
-    display: 'grid',
-    gridTemplateColumns: 'repeat(7, 1fr)',
-    gap: 2,
-  }}>
-    {Array.from({ length: 49 }).map((_, i) => {
-      const pattern = [0,1,2,3,4,5,6,7,13,14,21,27,28,29,30,31,32,33,34,35,41,42,43,44,45,46,47,48]
-      return (
-        <div key={i} style={{
-          background: pattern.includes(i) || ((i * 17 + i * i * 3) % 10) > 5 ? '#000' : 'transparent',
-          borderRadius: 1,
-        }} />
-      )
-    })}
-  </div>
-)
-
-/* ── Invites sent by admin/coach ── */
-const initialInvites = [
-  {
-    id: 101, status: 'pending',
-    eventName: 'City League U-17 Championship',
-    sport: 'Football', date: 'Mar 15, 2026 · 10:00 AM',
-    venue: 'Rajiv Gandhi Stadium, Mumbai',
-    from: 'Coach Ramesh Kumar',
-    message: 'You have been selected to represent AcademyPro in the City League. Confirm your availability.',
+function mapEvent(event, registrationStatus) {
+  return {
+    ...event,
+    name: event.title,
+    type: 'Sports event',
+    date: formatDate(event.date),
+    venue: event.location || 'Venue to be announced',
+    desc: event.description || 'Event details will be announced by the organizer.',
     fee: 0,
-  },
-  {
-    id: 102, status: 'pending',
-    eventName: 'Inter-Academy Friendly',
-    sport: 'Football', date: 'Mar 22, 2026 · 4:00 PM',
-    venue: 'AcademyPro Ground, Pune',
-    from: 'Admin – AcademyPro',
-    message: 'Friendly match invitation. You have been selected for starting XI. Accept to confirm your spot.',
-    fee: 0,
-  },
-]
+    joined: registrationStatus === 'ACCEPTED',
+    registrationStatus: registrationStatus || null,
+  }
+}
 
 export default function StudentEvents() {
   const [mainTab, setMainTab] = useState('available')
   const [filterTab, setFilterTab] = useState('All Events')
-  const [events, setEvents] = useState(allEvents)
-  const [invites, setInvites] = useState(initialInvites)
+  const [events, setEvents] = useState([])
+  const [registrations, setRegistrations] = useState([])
   const [selectedEvent, setSelectedEvent] = useState(null)
-  const [paymentStep, setPaymentStep] = useState('detail') // detail | payment | confirmed
-  const [payMethod, setPayMethod] = useState('upi')
+  const [loading, setLoading] = useState(true)
+  const [joiningId, setJoiningId] = useState(null)
+  const [error, setError] = useState('')
+  const [notice, setNotice] = useState('')
 
-  const myEvents = events.filter(e => e.joined)
-  const pendingInvites = invites.filter(i => i.status === 'pending')
+  const loadEvents = useCallback(async () => {
+    setLoading(true)
+    setError('')
+    try {
+      const [eventResponse, registrationResponse] = await Promise.all([
+        API.get('/events'),
+        API.get('/events/mine'),
+      ])
+      const registrationRows = registrationResponse.data?.events || []
+      setRegistrations(registrationRows.map((event) => mapEvent(event, event.registrationStatus)))
+      const statusById = new Map(registrationRows.map((event) => [event.id, event.registrationStatus]))
+      const eventRows = Array.isArray(eventResponse.data) ? eventResponse.data : []
+      setEvents(eventRows.map((event) => mapEvent(event, statusById.get(event.id))))
+    } catch (loadError) {
+      setError(loadError.response?.data?.error || loadError.response?.data?.message || 'Unable to load events. Check your connection and sign in again.')
+    } finally {
+      setLoading(false)
+    }
+  }, [])
 
-  const filtered = events.filter(e => {
-    if (filterTab === 'Free') return e.fee === 0
-    if (filterTab === 'Paid') return e.fee > 0
-    if (filterTab === 'Joined') return e.joined
+  useEffect(() => {
+    loadEvents()
+  }, [loadEvents])
+
+  const myEvents = useMemo(
+    () => registrations.filter((event) => event.registrationStatus === 'ACCEPTED'),
+    [registrations]
+  )
+
+  const pendingInvites = useMemo(
+    () => registrations.filter((event) => event.registrationStatus === 'PENDING'),
+    [registrations]
+  )
+
+  const filtered = useMemo(() => events.filter((event) => {
+    if (filterTab === 'Free') return true
+    if (filterTab === 'Paid') return false
+    if (filterTab === 'Joined') return event.joined
     return true
-  })
+  }), [events, filterTab])
 
-  const openEvent = (ev) => {
-    setSelectedEvent(ev)
-    setPaymentStep('detail')
+  const openEvent = (event) => {
+    setSelectedEvent(event)
+    setNotice('')
   }
 
-  const closeEvent = () => {
-    setSelectedEvent(null)
-    setPaymentStep('detail')
-  }
+  const closeEvent = () => setSelectedEvent(null)
 
-  const handleJoin = () => {
-    if (selectedEvent.fee > 0) {
-      setPaymentStep('payment')
-    } else {
-      setPaymentStep('confirmed')
-      setEvents(p => p.map(e => e.id === selectedEvent.id ? { ...e, joined: true } : e))
-      setSelectedEvent(prev => ({ ...prev, joined: true }))
+  const handleJoin = async () => {
+    if (!selectedEvent || selectedEvent.joined || joiningId) return
+    setJoiningId(selectedEvent.id)
+    setError('')
+    setNotice('')
+    try {
+      await API.post(`/events/${selectedEvent.id}/register`)
+      setNotice('Your registration has been saved.')
+      setSelectedEvent({ ...selectedEvent, joined: true, registrationStatus: 'ACCEPTED' })
+      await loadEvents()
+    } catch (joinError) {
+      setError(joinError.response?.data?.error || joinError.response?.data?.message || 'Unable to register for this event.')
+    } finally {
+      setJoiningId(null)
     }
   }
 
-  const handlePayment = () => {
-    setPaymentStep('confirmed')
-    setEvents(p => p.map(e => e.id === selectedEvent.id ? { ...e, joined: true } : e))
-    setSelectedEvent(prev => ({ ...prev, joined: true }))
+  const updateInvite = async (event, status) => {
+    setError('')
+    setNotice('')
+    try {
+      await API.patch(`/events/${event.id}/registration`, { status })
+      setNotice(status === 'ACCEPTED' ? 'Invitation accepted.' : 'Invitation declined.')
+      await loadEvents()
+    } catch (updateError) {
+      setError(updateError.response?.data?.error || 'Unable to update this invitation.')
+    }
   }
 
   return (
     <div className="se-page">
       <Header />
 
-      {/* Event Detail Modal */}
       {selectedEvent && (
         <div className="se-modal-overlay" onClick={closeEvent}>
-          <div className="se-modal" onClick={e => e.stopPropagation()}>
+          <div className="se-modal" onClick={(event) => event.stopPropagation()}>
             <div className="se-modal-header">
-              <button className="se-modal-close" onClick={closeEvent}>✕</button>
+              <button className="se-modal-close" onClick={closeEvent} aria-label="Close event details">✕</button>
               <h3 className="se-modal-title">{selectedEvent.name}</h3>
               <span className="se-ev-type">{selectedEvent.type}</span>
             </div>
-
             <div className="se-modal-body">
-              {paymentStep === 'detail' && (
-                <>
-                  <div className="se-modal-info">
-                    <div className="se-info-row"><span>📅</span><span>{selectedEvent.date}</span></div>
-                    <div className="se-info-row"><span>📍</span><span>{selectedEvent.venue}</span></div>
-                    <div className="se-info-row"><span>👥</span><span>Team Size: {selectedEvent.team}</span></div>
-                  </div>
-                  <p className="se-modal-desc">{selectedEvent.desc}</p>
-                  <div className="se-fee-row">
-                    <span className="se-fee-label">Entry Fee</span>
-                    <span className={`se-fee-val ${selectedEvent.fee === 0 ? 'free' : ''}`}>
-                      {selectedEvent.fee === 0 ? '🟢 Free' : `₹${selectedEvent.fee}`}
-                    </span>
-                  </div>
-                  {selectedEvent.joined ? (
-                    <div className="se-already-joined">✓ You are registered for this event</div>
-                  ) : (
-                    <button className="se-modal-join-btn" onClick={handleJoin}>
-                      {selectedEvent.fee > 0 ? `Pay ₹${selectedEvent.fee} & Join` : 'Join Event'}
-                    </button>
-                  )}
-                </>
+              <div className="se-modal-info">
+                <div className="se-info-row"><span>📅</span><span>{selectedEvent.date}</span></div>
+                <div className="se-info-row"><span>📍</span><span>{selectedEvent.venue}</span></div>
+              </div>
+              <p className="se-modal-desc">{selectedEvent.desc}</p>
+              <div className="se-fee-row">
+                <span className="se-fee-label">Registration</span>
+                <span className="se-fee-val free">Free to register</span>
+              </div>
+              {selectedEvent.joined ? (
+                <div className="se-already-joined">✓ You are registered for this event</div>
+              ) : (
+                <button className="se-modal-join-btn" onClick={handleJoin} disabled={joiningId === selectedEvent.id}>
+                  {joiningId === selectedEvent.id ? 'Registering…' : 'Register for Event'}
+                </button>
               )}
-
-              {paymentStep === 'payment' && (
-                <div className="se-payment-section">
-                  <p className="se-pay-title">Complete Payment</p>
-                  <div className="se-pay-amount">
-                    <span>Amount to Pay</span>
-                    <strong>₹{selectedEvent.fee}</strong>
-                  </div>
-                  <p className="se-pay-method-label">Select Payment Method</p>
-                  <div className="se-pay-methods">
-                    {['upi', 'card', 'netbanking'].map(m => (
-                      <button
-                        key={m}
-                        className={`se-pay-method-btn ${payMethod === m ? 'active' : ''}`}
-                        onClick={() => setPayMethod(m)}
-                      >
-                        <span>{m === 'upi' ? '📱' : m === 'card' ? '💳' : '🏦'}</span>
-                        <span>{m === 'upi' ? 'UPI' : m === 'card' ? 'Card' : 'Net Banking'}</span>
-                      </button>
-                    ))}
-                  </div>
-                  {payMethod === 'upi' && (
-                    <div className="se-upi-box">
-                      <input placeholder="Enter UPI ID (e.g. name@upi)" className="se-upi-input" />
-                    </div>
-                  )}
-                  {payMethod === 'card' && (
-                    <div className="se-card-box">
-                      <input placeholder="Card Number" className="se-upi-input" style={{marginBottom:8}} />
-                      <div style={{display:'flex', gap:8}}>
-                        <input placeholder="MM/YY" className="se-upi-input" style={{flex:1}} />
-                        <input placeholder="CVV" className="se-upi-input" style={{flex:1}} />
-                      </div>
-                    </div>
-                  )}
-                  <button className="se-modal-join-btn" onClick={handlePayment}>
-                    Confirm & Pay ₹{selectedEvent.fee}
-                  </button>
-                  <button className="se-back-btn" onClick={() => setPaymentStep('detail')}>← Back</button>
-                </div>
-              )}
-
-              {paymentStep === 'confirmed' && (
-                <div className="se-confirmed-section">
-                  <div className="se-confirmed-icon">✅</div>
-                  <p className="se-confirmed-title">Registration Confirmed!</p>
-                  <p className="se-confirmed-sub">You're registered for {selectedEvent.name}</p>
-
-                  <div className="se-pass-card">
-                    <p className="se-pass-label">🎫 EVENT PASS</p>
-                    <QRCode />
-                    <p className="se-pass-sub">Present this QR at the venue</p>
-                    <div className="se-pass-details">
-                      <div className="se-pass-row">
-                        <span>Event</span>
-                        <strong>{selectedEvent.name}</strong>
-                      </div>
-                      <div className="se-pass-row">
-                        <span>Date</span>
-                        <strong>{selectedEvent.date}</strong>
-                      </div>
-                      <div className="se-pass-row">
-                        <span>Venue</span>
-                        <strong>{selectedEvent.venue}</strong>
-                      </div>
-                      {selectedEvent.fee > 0 && (
-                        <div className="se-pass-row">
-                          <span>Paid</span>
-                          <strong style={{color:'#4caf50'}}>₹{selectedEvent.fee} ✓</strong>
-                        </div>
-                      )}
-                    </div>
-                  </div>
-                  <button className="se-modal-join-btn" onClick={closeEvent}>Done</button>
-                </div>
-              )}
+              {notice && <p role="status" className="se-confirmed-sub">{notice}</p>}
+              {error && <p role="alert" className="se-confirmed-sub">{error}</p>}
             </div>
           </div>
         </div>
       )}
 
       <div className="se-scroll">
+        {error && <p role="alert" className="se-confirmed-sub">{error}</p>}
+        {notice && !selectedEvent && <p role="status" className="se-confirmed-sub">{notice}</p>}
+
         <div className="se-main-tabs">
           <button className={mainTab === 'my' ? 'active' : ''} onClick={() => setMainTab('my')}>
             My Events {pendingInvites.length > 0 && <span className="se-inv-dot">{pendingInvites.length}</span>}
           </button>
           <button className={mainTab === 'available' ? 'active' : ''} onClick={() => setMainTab('available')}>
-            Available ({allEvents.length})
+            Available ({events.length})
           </button>
         </div>
 
-        {mainTab === 'available' ? (
+        {loading ? (
+          <p className="se-sub-title" role="status">Loading events…</p>
+        ) : mainTab === 'available' ? (
           <>
             <p className="se-sub-title">Upcoming academy events & tournaments</p>
             <div className="se-filter-tabs">
-              {['All Events', 'Free', 'Paid', 'Joined'].map(f => (
-                <button key={f} className={filterTab === f ? 'active' : ''} onClick={() => setFilterTab(f)}>{f}</button>
+              {['All Events', 'Free', 'Paid', 'Joined'].map((filter) => (
+                <button key={filter} className={filterTab === filter ? 'active' : ''} onClick={() => setFilterTab(filter)}>{filter}</button>
               ))}
             </div>
-            <div className="se-event-list">
-              {filtered.map(ev => (
-                <div key={ev.id} className="se-event-card" onClick={() => openEvent(ev)}>
-                  <p className="se-ev-name">{ev.name}</p>
-                  <span className="se-ev-type">{ev.type}</span>
-                  <div className="se-ev-details">
-                    <p>📅 {ev.date}</p>
-                    <p>📍 {ev.venue}</p>
-                    <p>👥 Team Size: {ev.team}</p>
+            {filtered.length === 0 ? (
+              <div className="se-empty-state">
+                <span>🏆</span>
+                <p>No events to show yet</p>
+                <p className="se-empty-sub">New events published by coaches will appear here.</p>
+              </div>
+            ) : (
+              <div className="se-event-list">
+                {filtered.map((event) => (
+                  <div key={event.id} className="se-event-card" role="button" tabIndex={0} onClick={() => openEvent(event)} onKeyDown={(keyEvent) => { if (keyEvent.key === 'Enter' || keyEvent.key === ' ') openEvent(event) }}>
+                    <p className="se-ev-name">{event.name}</p>
+                    <span className="se-ev-type">{event.type}</span>
+                    <div className="se-ev-details">
+                      <p>📅 {event.date}</p>
+                      <p>📍 {event.venue}</p>
+                    </div>
+                    <div className="se-ev-footer">
+                      <span className="se-ev-fee free">Free registration</span>
+                      {event.joined
+                        ? <span className="se-joined-badge">✓ Registered</span>
+                        : <button className="se-join-btn" onClick={(clickEvent) => { clickEvent.stopPropagation(); openEvent(event) }}>Register</button>}
+                    </div>
                   </div>
-                  <div className="se-ev-footer">
-                    <span className={`se-ev-fee ${ev.fee === 0 ? 'free' : ''}`}>
-                      {ev.fee === 0 ? '🟢 Free entry' : `₹${ev.fee}`}
-                    </span>
-                    {ev.joined
-                      ? <span className="se-joined-badge">✓ Joined</span>
-                      : <button className="se-join-btn" onClick={e => { e.stopPropagation(); openEvent(ev) }}>Join Event</button>
-                    }
-                  </div>
-                </div>
-              ))}
-            </div>
+                ))}
+              </div>
+            )}
           </>
         ) : (
           <div className="se-my-events">
-            {/* ── INVITES FROM COACH / ADMIN ── */}
             {pendingInvites.length > 0 && (
               <div className="se-invites-section">
-                <p className="se-invites-hd">📩 Invitations ({pendingInvites.length})</p>
-                {invites.map(inv => (
-                  <div key={inv.id} className={`se-invite-card ${inv.status !== 'pending' ? 'resolved' : ''}`}>
-                    <div className="se-invite-from">
-                      <span className="se-invite-badge">INVITE</span>
-                      <span className="se-invite-sender">from {inv.from}</span>
-                    </div>
-                    <p className="se-invite-event">{inv.eventName}</p>
+                <p className="se-invites-hd">Invitations ({pendingInvites.length})</p>
+                {pendingInvites.map((event) => (
+                  <div key={event.id} className="se-invite-card">
+                    <p className="se-invite-event">{event.name}</p>
                     <div className="se-invite-meta">
-                      <span>⚽ {inv.sport}</span>
-                      <span>📅 {inv.date}</span>
-                      <span>📍 {inv.venue}</span>
+                      <span>📅 {event.date}</span>
+                      <span>📍 {event.venue}</span>
                     </div>
-                    <p className="se-invite-msg">{inv.message}</p>
-                    {inv.status === 'pending' ? (
-                      <div className="se-invite-actions">
-                        <button className="se-inv-accept" onClick={() => setInvites(p => p.map(i => i.id === inv.id ? {...i, status:'accepted'} : i))}>
-                          ✓ Accept
-                        </button>
-                        <button className="se-inv-decline" onClick={() => setInvites(p => p.map(i => i.id === inv.id ? {...i, status:'declined'} : i))}>
-                          ✕ Decline
-                        </button>
-                      </div>
-                    ) : (
-                      <div className={`se-inv-result ${inv.status}`}>
-                        {inv.status === 'accepted' ? '✓ Accepted' : '✕ Declined'}
-                      </div>
-                    )}
+                    <p className="se-invite-msg">{event.desc}</p>
+                    <div className="se-invite-actions">
+                      <button className="se-inv-accept" onClick={() => updateInvite(event, 'ACCEPTED')}>✓ Accept</button>
+                      <button className="se-inv-decline" onClick={() => updateInvite(event, 'DECLINED')}>✕ Decline</button>
+                    </div>
                   </div>
                 ))}
               </div>
             )}
 
-            {/* ── JOINED EVENTS ── */}
             {myEvents.length === 0 && pendingInvites.length === 0 ? (
               <div className="se-empty-state">
                 <span>🏆</span>
-                <p>No events joined yet</p>
-                <p className="se-empty-sub">Browse available events and join!</p>
+                <p>No events registered yet</p>
+                <p className="se-empty-sub">Browse available events to register.</p>
               </div>
             ) : myEvents.length > 0 && (
               <>
-                <p className="se-invites-hd">✓ Joined Events ({myEvents.length})</p>
-                {myEvents.map(ev => (
-                  <div key={ev.id} className="se-event-card" onClick={() => { openEvent(ev); setPaymentStep('confirmed') }}>
-                    <p className="se-ev-name">{ev.name}</p>
-                    <span className="se-ev-type">{ev.type}</span>
+                <p className="se-invites-hd">Registered Events ({myEvents.length})</p>
+                {myEvents.map((event) => (
+                  <div key={event.id} className="se-event-card" onClick={() => openEvent(event)}>
+                    <p className="se-ev-name">{event.name}</p>
+                    <span className="se-ev-type">{event.type}</span>
                     <div className="se-ev-details">
-                      <p>📅 {ev.date}</p>
-                      <p>📍 {ev.venue}</p>
+                      <p>📅 {event.date}</p>
+                      <p>📍 {event.venue}</p>
                     </div>
                     <div className="se-ev-footer">
-                      <span className={`se-ev-fee ${ev.fee === 0 ? 'free' : ''}`}>
-                        {ev.fee === 0 ? '🟢 Free entry' : `₹${ev.fee}`}
-                      </span>
-                      <span className="se-joined-badge">✓ Joined · View Pass</span>
+                      <span className="se-ev-fee free">Free registration</span>
+                      <span className="se-joined-badge">✓ Registered</span>
                     </div>
                   </div>
                 ))}
