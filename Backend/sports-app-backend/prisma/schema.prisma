@@ -82,6 +82,9 @@ model EventInvite {
 
   event   Event @relation(fields: [eventId], references: [id], onDelete: Cascade)
   student User  @relation(fields: [studentId], references: [id], onDelete: Cascade)
+
+  @@unique([eventId, studentId])
+  @@index([studentId, status])
 }
 
 enum InviteStatus {
@@ -110,16 +113,17 @@ model TurfSlot {
   startTime DateTime
   endTime   DateTime
   isBooked  Boolean  @default(false)
+  isBlocked Boolean  @default(false)
   createdAt DateTime @default(now())
 
   turf    Turf     @relation(fields: [turfId], references: [id], onDelete: Cascade)
-  booking Booking?
+  bookings Booking[]
 }
 
 model Booking {
   id        String        @id @default(uuid())
   turfId    String
-  slotId    String        @unique
+  slotId    String
   studentId String
   status    BookingStatus @default(CONFIRMED)
   createdAt DateTime      @default(now())

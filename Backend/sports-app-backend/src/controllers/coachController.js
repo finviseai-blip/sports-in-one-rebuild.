@@ -24,8 +24,7 @@ exports.getCoachById = async (req, res) => {
       where: { id: req.params.id },
       select: {
         ...publicCoachSelect,
-        events: { orderBy: { date: 'asc' } },
-        studentsOfCoach: { select: { id: true, studentId: true, coachId: true, createdAt: true } }
+        events: { orderBy: { date: 'asc' } }
       }
     });
     if (!coach || coach.role !== 'COACH') {

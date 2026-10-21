@@ -5,6 +5,9 @@ on:
   push:
     branches: [main, feature/restore-app-and-hardening]
 
+permissions:
+  contents: read
+
 jobs:
   frontend:
     runs-on: ubuntu-latest
@@ -16,7 +19,9 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 22
-      - run: npm install --no-audit --no-fund
+          cache: npm
+          cache-dependency-path: Frontend/package-lock.json
+      - run: npm ci --no-audit --no-fund
       - run: npm run build
       - run: npm run lint
 
@@ -25,14 +30,37 @@ jobs:
     defaults:
       run:
         working-directory: Backend/sports-app-backend
+    services:
+      postgres:
+        image: postgres:16
+        env:
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+          POSTGRES_DB: sports_db
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U postgres -d sports_db"
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+    env:
+      DATABASE_URL: postgresql://postgres:postgres@localhost:5432/sports_db
+      JWT_SECRET: ci-only-secret-value-longer-than-thirty-two-characters
+      NODE_ENV: test
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
           node-version: 22
-      - run: npm install --no-audit --no-fund
+          cache: npm
+          cache-dependency-path: Backend/sports-app-backend/package-lock.json
+      - run: npm ci --no-audit --no-fund
       - run: npm run check
       - run: npm test
-      - run: npx prisma validate
-        env:
-          DATABASE_URL: postgresql://postgres:postgres@localhost:5432/sports_db
+      - name: Validate Prisma schema
+        run: npx prisma validate
+      - name: Generate Prisma client
+        run: npx prisma generate
+      - name: Apply migrations to clean PostgreSQL
+        run: npx prisma migrate deploy

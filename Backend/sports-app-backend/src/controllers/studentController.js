@@ -1,14 +1,25 @@
 const bcrypt = require('bcryptjs');
 const prisma = require('../config/database');
 
-function canAccessStudent(req, studentId) {
-  return req.user.role !== 'STUDENT' || req.user.userId === studentId;
+async function canAccessStudent(req, studentId) {
+  if (req.user.role === 'ADMIN') return true;
+  if (req.user.role === 'STUDENT') return req.user.userId === studentId;
+  if (req.user.role !== 'COACH') return false;
+  const association = await prisma.coachStudent.findUnique({
+    where: { coachId_studentId: { coachId: req.user.userId, studentId } },
+    select: { id: true }
+  });
+  return Boolean(association);
 }
 
-exports.getAllStudents = async (_req, res) => {
+exports.getAllStudents = async (req, res) => {
   try {
+    const where = { role: 'STUDENT' };
+    if (req.user.role === 'COACH') {
+      where.coachStudents = { some: { coachId: req.user.userId } };
+    }
     const students = await prisma.user.findMany({
-      where: { role: 'STUDENT' },
+      where,
       select: { id: true, name: true, email: true, phone: true, dob: true, role: true, createdAt: true }
     });
     return res.status(200).json(students);
@@ -21,7 +32,7 @@ exports.getAllStudents = async (_req, res) => {
 exports.getStudentById = async (req, res) => {
   try {
     const { id } = req.params;
-    if (!canAccessStudent(req, id)) {
+    if (!(await canAccessStudent(req, id))) {
       return res.status(403).json({ error: 'You can only access your own student profile' });
     }
 
@@ -42,7 +53,7 @@ exports.getStudentById = async (req, res) => {
 exports.getStudentAnalytics = async (req, res) => {
   try {
     const { id } = req.params;
-    if (!canAccessStudent(req, id)) {
+    if (!(await canAccessStudent(req, id))) {
       return res.status(403).json({ error: 'You can only access your own analytics' });
     }
 

@@ -17,6 +17,7 @@ exports.createBooking = async (req, res) => {
   try {
     const slot = await prisma.turfSlot.findUnique({ where: { id: slotId } });
     if (!slot) return res.status(404).json({ error: 'Slot not found' });
+    if (slot.isBlocked) return res.status(409).json({ error: 'This slot is blocked by the turf owner' });
     if (slot.turfId !== turfId) {
       return res.status(400).json({ error: 'The selected slot does not belong to this turf' });
     }
@@ -24,10 +25,9 @@ exports.createBooking = async (req, res) => {
       return res.status(400).json({ error: 'Bookings must be made before a slot begins' });
     }
 
-    // Conditional update is atomic: only one concurrent request can claim an unbooked slot.
     const booking = await prisma.$transaction(async (tx) => {
       const claimed = await tx.turfSlot.updateMany({
-        where: { id: slotId, turfId, isBooked: false, startTime: { gt: new Date() } },
+        where: { id: slotId, turfId, isBooked: false, isBlocked: false, startTime: { gt: new Date() } },
         data: { isBooked: true }
       });
       if (claimed.count !== 1) {
@@ -59,7 +59,6 @@ exports.getAllBookings = async (req, res) => {
     const where = req.user.role === 'TURF_OWNER'
       ? { turf: { is: { ownerId: req.user.userId } } }
       : {};
-
     const bookings = await prisma.booking.findMany({
       where,
       include: safeBookingInclude,
@@ -93,7 +92,6 @@ exports.getBookingById = async (req, res) => {
       include: safeBookingInclude
     });
     if (!booking) return res.status(404).json({ error: 'Booking not found' });
-
     if (req.user.role === 'STUDENT' && booking.studentId !== req.user.userId) {
       return res.status(403).json({ error: 'You can only access your own bookings' });
     }
@@ -104,5 +102,51 @@ exports.getBookingById = async (req, res) => {
   } catch (error) {
     console.error('Get booking failed:', error.message);
     return res.status(500).json({ error: 'Unable to load booking' });
+  }
+};
+
+exports.cancelMyBooking = async (req, res) => {
+  try {
+    const booking = await prisma.booking.findUnique({
+      where: { id: req.params.id },
+      include: { slot: true }
+    });
+    if (!booking) return res.status(404).json({ error: 'Booking not found' });
+    if (booking.studentId !== req.user.userId) {
+      return res.status(403).json({ error: 'You can only cancel your own bookings' });
+    }
+    if (booking.status === 'CANCELLED') {
+      return res.status(200).json({ message: 'Booking is already cancelled', booking });
+    }
+    if (booking.slot.startTime <= new Date()) {
+      return res.status(400).json({ error: 'A booking cannot be cancelled after its slot has started' });
+    }
+
+    const cancelled = await prisma.$transaction(async (tx) => {
+      const updated = await tx.booking.updateMany({
+        where: { id: booking.id, studentId: req.user.userId, status: 'CONFIRMED' },
+        data: { status: 'CANCELLED' }
+      });
+      if (updated.count !== 1) {
+        const conflict = new Error('BOOKING_STATE_CHANGED');
+        conflict.status = 409;
+        throw conflict;
+      }
+      await tx.turfSlot.update({
+        where: { id: booking.slotId },
+        data: { isBooked: false }
+      });
+      return tx.booking.findUnique({
+        where: { id: booking.id },
+        include: safeBookingInclude
+      });
+    });
+    return res.status(200).json({ message: 'Booking cancelled', booking: cancelled });
+  } catch (error) {
+    if (error.status === 409 || error.message === 'BOOKING_STATE_CHANGED') {
+      return res.status(409).json({ error: 'Booking status changed. Refresh and try again.' });
+    }
+    console.error('Cancel booking failed:', error.message);
+    return res.status(500).json({ error: 'Unable to cancel booking' });
   }
 };

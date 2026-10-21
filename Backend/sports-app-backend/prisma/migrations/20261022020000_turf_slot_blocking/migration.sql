@@ -1,0 +1,2 @@
+ALTER TABLE "TurfSlot"
+ADD COLUMN "isBlocked" BOOLEAN NOT NULL DEFAULT false;
