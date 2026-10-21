@@ -122,7 +122,7 @@ model TurfSlot {
 model Booking {
   id        String        @id @default(uuid())
   turfId    String
-  slotId    String        @unique
+  slotId    String
   studentId String
   status    BookingStatus @default(CONFIRMED)
   createdAt DateTime      @default(now())
